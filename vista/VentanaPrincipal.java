@@ -6,8 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.GridLayout;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +23,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import controlador.Coordinador;
 
 @SuppressWarnings("serial")
@@ -42,6 +41,8 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txt_PromInteresMusica;
 	private JTextField txt_PromInteresEspectaculo;
 	private JTextField txt_PromInteresCiencia;
+	private JPanel pnl_GruposTablas;
+	private DefaultTableModel tblGruposModel;
 
 	public VentanaPrincipal(Coordinador coord) {
 		coordinador = coord;
@@ -120,7 +121,7 @@ public class VentanaPrincipal extends JFrame {
 		btn_CrearGrupos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				lanzarVentanaCrearGrupos();
+				agregarGrupos();
 			}
 		});
 		toolBar.add(btn_CrearGrupos);
@@ -136,7 +137,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	// ------------ Añadir componentes a la interfaz -------------------------------
 	public void crearGrillaPersonas() {
-		String[] columns = { "ID", "Nombre", "Int. Deporte", "Int. Musica", "Int. Espectaculo", "Int. Ciencia" };
+		String[] columns = { "ID", "Nombre", "Int. Deporte", "Int. Musica", "Int. Espectaculo", "Int. Ciencia"};
 
 		JPanel pnl_Personas = new JPanel();
 		pnl_Personas.setForeground(new Color(255, 255, 255));
@@ -154,13 +155,8 @@ public class VentanaPrincipal extends JFrame {
 		CellRender.setHorizontalAlignment(SwingConstants.CENTER);
 		for (int c = 0; c < columns.length; c++) {
 			tablaPersonas.getColumnModel().getColumn(c).setCellRenderer(CellRender);
-			if(c == 0)
-				tablaPersonas.getColumnModel().getColumn(c).setPreferredWidth(10);
-			if(c > 1) {
-				tablaPersonas.getColumnModel().getColumn(c).setPreferredWidth(50);
-			}
 		}
-
+		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(10);
 		JScrollPane spl_TablaPersonas = new JScrollPane(tablaPersonas);
 		spl_TablaPersonas.setBounds(10, 20, 521, 233);
 		pnl_Personas.add(spl_TablaPersonas);		
@@ -274,7 +270,18 @@ public class VentanaPrincipal extends JFrame {
 		pnl_Grupos.setBounds(10, 365, 1246, 308);
 		pnl_Grupos.setLayout(null);
 		getContentPane().add(pnl_Grupos);
-
+		
+		pnl_GruposTablas = new JPanel();
+		pnl_GruposTablas.setBorder(new LineBorder(new Color(0, 255, 0)));
+		pnl_GruposTablas.setBounds(10, 22, 1226, 276);
+		pnl_GruposTablas.setLayout(new GridLayout(1, 1, 0, 5));	
+		pnl_Grupos.add(pnl_GruposTablas);
+		
+		tblGruposModel = new DefaultTableModel();
+		tblGruposModel.setColumnIdentifiers(new String[] {"Grupo", "Persona"});
+        JTable table = new JTable(tblGruposModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        pnl_GruposTablas.add(scrollPane);
 	}
 
 	public void actualizarTodo() {
@@ -295,6 +302,7 @@ public class VentanaPrincipal extends JFrame {
 		while (tabla.getRowCount() > 0) {
 			modeloTabla.removeRow(0);
 		}
+		
 		for (Object[] fila : lista) {
 			modeloTabla.addRow(fila);
 		}
@@ -311,4 +319,16 @@ public class VentanaPrincipal extends JFrame {
 		txt_PromInteresEspectaculo.setText("");
 	}
 	
+	public void agregarGrupos() {
+		
+		List<List<String>> grupos = coordinador.obtenerGrupos();
+ 		
+		for(int i=0; i < grupos.size(); i++) {
+	        for(String persona : grupos.get(i)) {
+	        	System.out.println(persona);
+	            tblGruposModel.addRow(new String[] {"Grupo "+i, persona});
+	        }       
+		}
+		repaint();
+	}	
 }

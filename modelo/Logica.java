@@ -3,9 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import controlador.Coordinador;
 import modelo.objetos.Arista;
 import modelo.objetos.GrafoPersona;
@@ -52,8 +52,20 @@ public class Logica {
 		return lista;
 	}
 	
-	public void generarGrupos() {
+	public List<List<String>> obtenerGrupos(){
 		grafo.calcularCaminoMinimo();
+		
+		List<List<String>> grupos = new ArrayList<>();
+		Set<String> grupo = new HashSet<String>();
+		
+		for(Arista a : grafo.caminoMinimo()) {
+			grupo.add(a.persona1().nombre());
+			grupo.add(a.persona2().nombre());
+		}
+		
+		grupos.add(new ArrayList<>(grupo));
+		
+		return grupos;
 	}
 	
 	public Integer rangoMinimo() {

@@ -78,8 +78,8 @@ public class Coordinador {
 		return logica.obtenerRelaciones();
 	}
 	
-	public void generarGrupos() {
-		logica.generarGrupos();
+	public List<List<String>> obtenerGrupos() {
+		return logica.obtenerGrupos();
 	}
 	
 	public Integer cantPersonas() {

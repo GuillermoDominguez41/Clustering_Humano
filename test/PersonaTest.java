@@ -28,6 +28,10 @@ class PersonaTest {
 	public void equalsOtraPersonaDistinta() {
 		Persona otraPersona = new Persona("PersonaPrueba", 4, 5, 1, 1);
 		assertFalse(persona.equals(otraPersona));
-		
 	}	
+	
+	@Test
+	public void indiceSimilitud() {
+		// comparar dos personas con sus intereses y el resultado esperado.
+	}
 }

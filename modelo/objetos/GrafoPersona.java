@@ -8,6 +8,7 @@ import java.util.Set;
 public class GrafoPersona {
 	private List<Persona> nodos;
 	private Set<Arista> aristas;
+	private List<Arista> caminoMinimo;
 
     private int[][] matrizAdyacencia;
     private int mayorIndiceCM;
@@ -15,6 +16,7 @@ public class GrafoPersona {
     public GrafoPersona() {
         nodos = new ArrayList<>();
         aristas = new HashSet<>();
+        caminoMinimo = new ArrayList<>();
         mayorIndiceCM = Integer.MIN_VALUE;
     }
 
@@ -80,7 +82,7 @@ public class GrafoPersona {
         	Persona hijoNombre = nodos.get(i);
         	int similaridad = matrizAdyacencia[i][padre[i]];
         	
-        	aristas.add(new Arista(nodos.get(padre[i]), nodos.get(i), similaridad));
+        	caminoMinimo.add(new Arista(nodos.get(padre[i]), nodos.get(i), similaridad));
         	System.out.println(padreNombre.nombre() + " - " + hijoNombre.nombre() + ": " + similaridad);
         	
         	if(similaridad > mayorIndiceCM) {
@@ -111,4 +113,9 @@ public class GrafoPersona {
     public Set<Arista> aristas() {
     	return this.aristas;
     }
+    
+    public List<Arista> caminoMinimo(){
+    	return this.caminoMinimo;
+    }
+    
 }
