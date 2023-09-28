@@ -53,17 +53,27 @@ public class Logica {
 	}
 	
 	public List<List<String>> obtenerGrupos(){
-		grafo.calcularCaminoMinimo();
 		
+		
+		
+		Arista aristaMayorPeso = grafo.aristaMayorPeso();
+		
+		grafo.calcularCaminoMinimo();
 		List<List<String>> grupos = new ArrayList<>();
-		Set<String> grupo = new HashSet<String>();
+		Set<String> grupo1 = new HashSet<String>();
+		Set<String> grupo2 = new HashSet<String>();
 		
 		for(Arista a : grafo.caminoMinimo()) {
-			grupo.add(a.persona1().nombre());
-			grupo.add(a.persona2().nombre());
+			if(a.equals(aristaMayorPeso)) {
+				grupo1.add(a.persona1().nombre());
+				grupo1.add(a.persona2().nombre());
+			}
+			
+			grupo1.add(a.persona1().nombre());
+			grupo1.add(a.persona2().nombre());
 		}
 		
-		grupos.add(new ArrayList<>(grupo));
+		grupos.add(new ArrayList<>(grupo1));
 		
 		return grupos;
 	}

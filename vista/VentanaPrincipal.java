@@ -325,7 +325,7 @@ public class VentanaPrincipal extends JFrame {
  		
 		for(int i=0; i < grupos.size(); i++) {
 	        for(String persona : grupos.get(i)) {
-	        	System.out.println(persona);
+	        	
 	            tblGruposModel.addRow(new String[] {"Grupo "+i, persona});
 	        }       
 		}
