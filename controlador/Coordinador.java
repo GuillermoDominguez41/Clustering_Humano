@@ -78,7 +78,7 @@ public class Coordinador {
 		return logica.obtenerRelaciones();
 	}
 	
-	public List<List<String>> obtenerGrupos() {
+	public List<String> obtenerGrupos() {
 		return logica.obtenerGrupos();
 	}
 	

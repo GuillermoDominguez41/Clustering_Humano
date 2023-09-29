@@ -68,6 +68,7 @@ public class GrafoPersona {
 			visitados[u] = true;
 
 			for (int v = 0; v < n; v++) {
+//				System.out.println(nodos.get(i).nombre()+"-"+nodos.get(v).nombre() +" - "+ matrizAdyacencia[i][v] );
 				if (matrizAdyacencia[u][v] != 0 && !visitados[v] && matrizAdyacencia[u][v] < costoMinimo[v]) {
 					padre[v] = u;
 					costoMinimo[v] = matrizAdyacencia[u][v];

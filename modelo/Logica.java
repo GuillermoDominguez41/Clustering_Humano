@@ -52,31 +52,51 @@ public class Logica {
 		return lista;
 	}
 	
-	public List<List<String>> obtenerGrupos(){
-		
-		
-		
-		Arista aristaMayorPeso = grafo.aristaMayorPeso();
-		
+	public List<String> obtenerGrupos(){
 		grafo.calcularCaminoMinimo();
-		List<List<String>> grupos = new ArrayList<>();
+		
+		List<Arista> agm = grafo.caminoMinimo();
+		Arista aristaMayorPeso = grafo.aristaMayorPeso();
+		int cantPersonas = cantPersonas();
+
+		List<String> grupos = new ArrayList<>();
 		Set<String> grupo1 = new HashSet<String>();
 		Set<String> grupo2 = new HashSet<String>();
 		
-		for(Arista a : grafo.caminoMinimo()) {
-			if(a.equals(aristaMayorPeso)) {
-				grupo1.add(a.persona1().nombre());
-				grupo1.add(a.persona2().nombre());
+		grupo1.add(aristaMayorPeso.persona1().nombre());
+		grupo2.add(aristaMayorPeso.persona1().nombre());
+
+		for (int i = 0; (grupo1.size() + grupo2.size()) < cantPersonas; i++) {
+			if (i == cantPersonas - 1) {
+				i = 0;
 			}
-			
-			grupo1.add(a.persona1().nombre());
-			grupo1.add(a.persona2().nombre());
+
+			if (grupo1.contains(agm.get(i).persona1().nombre()) || grupo1.contains(agm.get(i).persona1().nombre())) {
+				grupo1.add(agm.get(i).persona1().nombre());
+				grupo1.add(agm.get(i).persona2().nombre());
+			}
+
+			if (grupo2.contains(agm.get(i).persona1().nombre()) || grupo2.contains(agm.get(i).persona1().nombre())) {
+				grupo1.add(agm.get(i).persona1().nombre());
+				grupo1.add(agm.get(i).persona2().nombre());
+			}
 		}
-		
-		grupos.add(new ArrayList<>(grupo1));
-		
+
+		grupos.add(listaToString(grupo1));
+		grupos.add(listaToString(grupo2));	
+				
 		return grupos;
 	}
+	
+	private String listaToString(Set<String> lista) {
+		StringBuilder sb = new StringBuilder();
+		String separador = " - ";
+		for (String s : lista) {
+			sb.append(s+separador);
+		}
+		return sb.toString().substring(0, sb.length() -separador.length());
+	}
+	
 	
 	public Integer rangoMinimo() {
 		Persona p = new Persona("", 1, 1, 1, 1);

@@ -320,15 +320,11 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	public void agregarGrupos() {
-		
-		List<List<String>> grupos = coordinador.obtenerGrupos();
- 		
-		for(int i=0; i < grupos.size(); i++) {
-	        for(String persona : grupos.get(i)) {
-	        	
-	            tblGruposModel.addRow(new String[] {"Grupo "+i, persona});
-	        }       
+		List<String> grupos = coordinador.obtenerGrupos();
+		for(int i=0; i < grupos.size(); i++) {	        	
+			tblGruposModel.addRow(new String[] {"Grupo "+(i+1), grupos.get(i)});      
 		}
-		repaint();
-	}	
+	}
+	
+	
 }
