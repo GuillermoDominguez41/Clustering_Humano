@@ -1,6 +1,6 @@
 package modelo.objetos;
 
-import java.util.Objects;
+
 
 // Clase para representar una arista entre personas
 public class Arista {
@@ -60,17 +60,21 @@ public class Arista {
 
 	@Override
 	public boolean equals(Object otroObjeto) {
-		if (otroObjeto != null || (otroObjeto instanceof Arista)) {
+		if (otroObjeto != null) {
+			if ((otroObjeto instanceof Arista)) {
+
+				Arista otraArista = (Arista) otroObjeto;
+
+				// Comparar los atributos que definen la igualdad
+				return (persona1().equals(otraArista.persona1) && persona2().equals(otraArista.persona2))
+						|| (persona1().equals(otraArista.persona2) && persona2().equals(otraArista.persona1));
+			}
+
 			if (this.hashCode() == otroObjeto.hashCode())
 				return true;
+
 		}
-
 		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(indiceSimilaridad, persona1, persona2);
 	}
 
 }

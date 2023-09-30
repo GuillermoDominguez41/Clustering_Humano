@@ -1,13 +1,12 @@
 package modelo.objetos;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 
 public class GrafoPersona {
 	private List<Persona> nodos;
-	private Set<Arista> aristas;
+
 	private List<Arista> caminoMinimo;
 
 	private int[][] matrizAdyacencia;
@@ -15,7 +14,7 @@ public class GrafoPersona {
 
 	public GrafoPersona() {
 		nodos = new ArrayList<>();
-		aristas = new HashSet<>();
+
 		caminoMinimo = new ArrayList<>();
 		indiceMayorPeso = Integer.MIN_VALUE;
 	}
@@ -41,7 +40,7 @@ public class GrafoPersona {
 				int similitud = calcularSimilitud(nodos.get(i), nodos.get(j));
 				matrizAdyacencia[i][j] = similitud;
 				matrizAdyacencia[j][i] = similitud;
-				aristas.add(new Arista(nodos.get(i), nodos.get(j), similitud));
+
 			}
 		}
 	}
@@ -86,9 +85,8 @@ public class GrafoPersona {
 			caminoMinimo.add(aristaActual);
 			System.out.println(padreNombre.nombre() + " - " + hijoNombre.nombre() + ": " + similaridad);
 			if (similaridad > indiceMayorPeso) {
-				indiceMayorPeso = i-1;
-				
-				
+				indiceMayorPeso = i - 1;
+
 			}
 		}
 
@@ -113,19 +111,12 @@ public class GrafoPersona {
 		return this.nodos;
 	}
 
-	public Set<Arista> aristas() {
-		return this.aristas;
-	}
-
 	public List<Arista> caminoMinimo() {
 		return this.caminoMinimo;
 	}
-	
-	
+
 	public Integer aristaMayorPeso() {
 		return this.indiceMayorPeso;
 	}
-	
-	
 
 }

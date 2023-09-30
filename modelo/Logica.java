@@ -1,8 +1,6 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,20 +37,6 @@ public class Logica {
 		return lista;
 	}
 
-	public List<Object[]> obtenerRelaciones() {
-		List<Object[]> lista = new ArrayList<>();
-		Set<Arista> sa = grafo.aristas();
-		List<Arista> la = new ArrayList<>(sa);
-
-		Collections.sort(la, Comparator.comparingInt(a -> a.indiceSimilaridad()));
-
-		for (Arista a : la) {
-			lista.add(new Object[] { a.persona1().nombre(), a.persona2().nombre(), a.indiceSimilaridad() });
-		}
-
-		return lista;
-	}
-
 	public List<String> obtenerGrupos() {
 		grafo.calcularCaminoMinimo();
 
@@ -72,30 +56,9 @@ public class Logica {
 		agm.remove(indiceMayorPeso);
 
 		// 2° Comenzamos a recorrer la lista de aristas "AGM"
-		while (grupo1.size() + grupo2.size() < cantPersonas) {
-			for (Arista a : agm) {
+		while ((grupo1.size() + grupo2.size()) < cantPersonas) {
+			removerArista(agm, grupo1, grupo2);
 
-				/*
-				 * 3° Verificamos si alguna de las dos personas de la arista se encuentra en
-				 * algun grupo. Al encontrar relacion de una de las personas, agregamos la
-				 * "otra persona" al mismo grupo
-				 */
-
-				if (grupo1.contains(a.persona1().nombre())) {
-					grupo1.add(a.persona2().nombre());
-
-				}
-
-				
-				if (grupo2.contains(a.persona1().nombre())) {
-					grupo2.add(a.persona2().nombre());
-
-				}
-
-				
-			}
-			
-			
 		}
 
 		grupos.add(listaToString(grupo1));
@@ -104,10 +67,30 @@ public class Logica {
 		return grupos;
 	}
 
-	private void removerArista(Arista arista) {
-		
+	private void removerArista(List<Arista> agm, Set<String> g1, Set<String> g2) {
+
+		for (int a = 0; a < agm.size(); a++) {
+
+			/*
+			 * 3° Verificamos si alguna de las dos personas de la arista se encuentra en
+			 * algun grupo. Al encontrar relacion de una de las personas, agregamos la
+			 * "otra persona" al mismo grupo
+			 */
+
+			if (g1.contains(agm.get(a).persona1().nombre())) {
+				g1.add(agm.get(a).persona2().nombre());
+				agm.remove(a);
+				return;
+			}
+
+			if (g2.contains(agm.get(a).persona1().nombre())) {
+				g2.add(agm.get(a).persona2().nombre());
+				agm.remove(a);
+				return;
+			}
+		}
 	}
-	
+
 	private String listaToString(Set<String> lista) {
 		StringBuilder sb = new StringBuilder();
 		String separador = " - ";
@@ -129,10 +112,6 @@ public class Logica {
 
 	public Integer cantPersonas() {
 		return grafo.nodos().size();
-	}
-
-	public Integer cantRelaciones() {
-		return grafo.aristas().size();
 	}
 
 	public Integer promInteresDeporte() {
