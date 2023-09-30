@@ -1,20 +1,18 @@
 package modelo.objetos;
 
 public class Persona {
-	
+
 	private String nombre;
 	private Integer InteresDeporte;
 	private Integer InteresMusica;
 	private Integer InteresEspectaculo;
 	private Integer InteresCiencia;
-	private Integer rangoMinimo;
-	private Integer rangoMaximo;
+	private static Integer rangoMinimo = 1;
+	private static Integer rangoMaximo = 5;
 
 	public Persona(String Nombre, Integer ID, Integer IM, Integer IE, Integer IC) {
-		rangoMinimo = 1;
-		rangoMaximo = 5;
-		
-		if(Nombre==null || ID==null || IM==null || IE==null || IC==null)
+
+		if (Nombre == null || ID == null || IM == null || IE == null || IC == null)
 			errorParametroNulo();
 		else {
 			this.nombre = Nombre;
@@ -28,29 +26,32 @@ public class Persona {
 		}
 	}
 
-	// ---------- Validar intereses -------------------------------------------------------
+	// ---------- Validar intereses
+	// -------------------------------------------------------
 	private boolean interesValido(Integer ID, Integer IM, Integer IE, Integer IC) {
 		return rangoInteresValido(ID) && rangoInteresValido(IM) && rangoInteresValido(IE) && rangoInteresValido(IC);
 	}
 
 	private boolean rangoInteresValido(Integer interes) {
-		return interes >= this.rangoMinimo && interes <= this.rangoMaximo;
+		return interes >= rangoMinimo && interes <= rangoMaximo;
 	}
-	
-	// ---------- Calcular indice de similitud --------------------------------------------
-    public Integer calcularIndiceSimilitud(Persona otraPersona) {
-    	int iDepor = calcularDiferenciaInteres(InteresDeporte, otraPersona.interesDeporte());
-    	int iMusic = calcularDiferenciaInteres(InteresMusica, otraPersona.interesMusica());
-    	int iEspec = calcularDiferenciaInteres(InteresEspectaculo, otraPersona.interesEspectaculo());
-    	int iCienc = calcularDiferenciaInteres(InteresCiencia, otraPersona.interesCiencia());
-    	return iDepor+iMusic+iEspec+iCienc;
-    }
-    
-    private Integer calcularDiferenciaInteres(Integer interesP1, Integer interesP2) {
-    	return Math.abs(interesP1-interesP2);
-    }
 
-	// ---------- Getters y Setters --------------------------------------------------------
+	// ---------- Calcular indice de similitud
+	// --------------------------------------------
+	public Integer calcularIndiceSimilitud(Persona otraPersona) {
+		int iDepor = calcularDiferenciaInteres(InteresDeporte, otraPersona.interesDeporte());
+		int iMusic = calcularDiferenciaInteres(InteresMusica, otraPersona.interesMusica());
+		int iEspec = calcularDiferenciaInteres(InteresEspectaculo, otraPersona.interesEspectaculo());
+		int iCienc = calcularDiferenciaInteres(InteresCiencia, otraPersona.interesCiencia());
+		return iDepor + iMusic + iEspec + iCienc;
+	}
+
+	private Integer calcularDiferenciaInteres(Integer interesP1, Integer interesP2) {
+		return Math.abs(interesP1 - interesP2);
+	}
+
+	// ---------- Getters y Setters
+	// --------------------------------------------------------
 	public String nombre() {
 		return nombre;
 	}
@@ -70,18 +71,18 @@ public class Persona {
 	public Integer interesCiencia() {
 		return InteresCiencia;
 	}
-	
-	public Integer rangoMinimo() {
+
+	public static Integer rangoMinimo() {
 		return rangoMinimo;
 	}
-	
-	public Integer rangoMaximo() {
+
+	public static Integer rangoMaximo() {
 		return rangoMaximo;
 	}
-	
-	
-	// ---------- Definir metodos propios para este Objeto ---------------------------------
-		
+
+	// ---------- Definir metodos propios para este Objeto
+	// ---------------------------------
+
 	@Override
 	public boolean equals(Object otroObjeto) {
 		if (otroObjeto != null || (otroObjeto instanceof Persona)) {
@@ -90,19 +91,21 @@ public class Persona {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Nombre:"+nombre+" - ID:"+InteresDeporte+" - IM:"+InteresMusica+" - IE:"+InteresEspectaculo+" - IC:"+InteresCiencia; 
+		return "Nombre:" + nombre + " - ID:" + InteresDeporte + " - IM:" + InteresMusica + " - IE:" + InteresEspectaculo
+				+ " - IC:" + InteresCiencia;
 	}
-	
-	// ------------ Errores ----------------------------------------------------------
+
+	// ------------ Errores
+	// ----------------------------------------------------------
 	private void errorParametroNulo() {
 		throw new IllegalArgumentException("Los parametros ingresados no pueden ser nulo o vacio");
 	}
-	
+
 	private void errorParametroFueraDeRango() {
 		throw new IllegalArgumentException("El parametro ingresado se encuentra fuera del rango definido");
 	}
-	
+
 }

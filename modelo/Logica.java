@@ -101,13 +101,11 @@ public class Logica {
 	}
 
 	public Integer rangoMinimo() {
-		Persona p = new Persona("", 1, 1, 1, 1);
-		return p.rangoMinimo();
+		return Persona.rangoMinimo();
 	}
 
 	public Integer rangoMaximo() {
-		Persona p = new Persona("", 1, 1, 1, 1);
-		return p.rangoMaximo();
+		return Persona.rangoMaximo();
 	}
 
 	public Integer cantPersonas() {
