@@ -11,13 +11,13 @@ public class GrafoPersona {
 	private List<Arista> caminoMinimo;
 
 	private int[][] matrizAdyacencia;
-	private Arista aristaMayorPeso;
+	private int indiceMayorPeso;
 
 	public GrafoPersona() {
 		nodos = new ArrayList<>();
 		aristas = new HashSet<>();
 		caminoMinimo = new ArrayList<>();
-		aristaMayorPeso = null;
+		indiceMayorPeso = Integer.MIN_VALUE;
 	}
 
 	public void agregarPersona(Persona persona) {
@@ -85,11 +85,8 @@ public class GrafoPersona {
 			Arista aristaActual = new Arista(nodos.get(padre[i]), nodos.get(i), similaridad);
 			caminoMinimo.add(aristaActual);
 			System.out.println(padreNombre.nombre() + " - " + hijoNombre.nombre() + ": " + similaridad);
-			if (aristaMayorPeso == null) {
-				aristaMayorPeso = aristaActual;
-			}
-			if (similaridad > aristaMayorPeso.indiceSimilaridad()) {
-				aristaMayorPeso = aristaActual;
+			if (similaridad > indiceMayorPeso) {
+				indiceMayorPeso = i-1;
 				
 				
 			}
@@ -125,8 +122,10 @@ public class GrafoPersona {
 	}
 	
 	
-	public Arista aristaMayorPeso() {
-		return this.aristaMayorPeso;
+	public Integer aristaMayorPeso() {
+		return this.indiceMayorPeso;
 	}
+	
+	
 
 }
