@@ -20,9 +20,8 @@ public class Logica {
 		coordinador = coord;
 	}
 
-	public void agregarPersona(String nombre, int interesDeporte, int interesMusica, int interesEspectaculo,
-			int interesCiencia) {
-		grafo.agregarPersona(new Persona(nombre, interesDeporte, interesMusica, interesEspectaculo, interesCiencia));
+	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
+		grafo.agregarPersona(nuevaPersona);
 	}
 
 	public List<Object[]> obtenerPersonas() {

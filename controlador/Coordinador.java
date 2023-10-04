@@ -1,15 +1,20 @@
 package controlador;
 
 import java.util.List;
+import bd.AdministradorBD;
 import modelo.Logica;
+import modelo.objetos.Persona;
 import vista.VentanaAgregarPersona;
+import vista.VentanaEditarPersona;
 import vista.VentanaPrincipal;
 
 public class Coordinador {
 
 	private Logica logica;
+	private AdministradorBD administradorBD;
 	private VentanaPrincipal vPrincipal;
 	private VentanaAgregarPersona vAgregarPersona;
+	private VentanaEditarPersona vEditarPersona;
 	private boolean hayDosVentanasAbiertas;
 
 	public Coordinador() {
@@ -19,6 +24,10 @@ public class Coordinador {
 	public void setLogica(Logica l) {
 		logica = l;
 	}
+	
+	public void setAdministradorBD(AdministradorBD admBD) {
+		administradorBD = admBD; 
+	}
 
 	public void setVentanaPrincipal(VentanaPrincipal vP) {
 		vPrincipal = vP;
@@ -27,7 +36,11 @@ public class Coordinador {
 	public void setVentanaAgregarPersona(VentanaAgregarPersona vAP) {
 		vAgregarPersona = vAP;
 	}
-
+	
+	public void setVentanaEditarPersona(VentanaEditarPersona vEP) {
+		vEditarPersona = vEP;
+	}
+	
 	public void mostrarVentanaAgregarPersona() {
 		if (hayDosVentanasAbiertas == false) {
 			vAgregarPersona.mostrarVentana();
@@ -39,6 +52,18 @@ public class Coordinador {
 		vAgregarPersona.cerrarVentana();
 		hayDosVentanasAbiertas = false;
 	}
+	
+	public void mostrarVentanaEditarPersona(String idPersona) {
+		if (hayDosVentanasAbiertas == false) {
+			vEditarPersona.mostrarVentana();
+			hayDosVentanasAbiertas = true;
+		}
+	}
+
+	public void cerrarVentanaEditarPersona() {
+		vEditarPersona.cerrarVentana();
+		hayDosVentanasAbiertas = false;
+	}
 
 	public Integer obtenerRangoMinimo() {
 		return logica.rangoMinimo();
@@ -48,13 +73,14 @@ public class Coordinador {
 		return logica.rangoMaximo();
 	}
 
-	public void agregarPersona(String nombre, int interesDeporte, int interesMusica, int interesEspectaculo,
-			int interesCiencia) {
-		logica.agregarPersona(nombre, interesDeporte, interesMusica, interesEspectaculo, interesCiencia);
+	public void agregarPersona(String nombre, int interesDeporte, int interesMusica, int interesEspectaculo, int interesCiencia) {
+		Persona nuevaPersona = new Persona(nombre, interesDeporte, interesMusica, interesEspectaculo, interesCiencia);
+		logica.agregarPersonaEnGrafo(nuevaPersona);
+		administradorBD.insertarPersona(nuevaPersona);
 	}
 
 	public List<Object[]> obtenerPersonas() {
-		return logica.obtenerPersonas();
+		return administradorBD.consultaPersonas();
 	}
 
 	public List<String> obtenerGrupos() {
@@ -67,6 +93,11 @@ public class Coordinador {
 
 	public void actualizarTodo() {
 		vPrincipal.actualizarTodo();
+	}
+
+	public boolean actualizarPersona() {
+		
+		return true;
 	}
 
 //	public void generarAristasEntreTodos() {

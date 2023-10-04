@@ -1,7 +1,5 @@
 package modelo.objetos;
 
-
-
 // Clase para representar una arista entre personas
 public class Arista {
 	private Persona persona1, persona2;

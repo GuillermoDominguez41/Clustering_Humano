@@ -2,10 +2,10 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import controlador.Coordinador;
@@ -31,16 +32,10 @@ public class VentanaPrincipal extends JFrame {
 	private Color colorTextFont;
 	private LineBorder lineBorder;
 	private JTable tablaPersonas;
-	private DefaultTableModel modelTablaPersonas;
-
-	private JTextField txt_CantPersonas;
-
-	private JTextField txt_PromInteresDeporte;
-	private JTextField txt_PromInteresMusica;
-	private JTextField txt_PromInteresEspectaculo;
-	private JTextField txt_PromInteresCiencia;
+	private DefaultTableModel modelTablaPersonas, modelTableGrupos;
+	private JTextField txt_CantPersonas, txt_PromInteresDeporte, txt_PromInteresMusica, txt_PromInteresEspectaculo,
+			txt_PromInteresCiencia;
 	private JPanel pnl_GruposTablas;
-	private DefaultTableModel modelTableGrupos;
 
 	public VentanaPrincipal(Coordinador coord) {
 		coordinador = coord;
@@ -56,9 +51,7 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().setLayout(null);
 
 		crearBarraHerramientas();
-		agregarPersonas(); // METODO DE PRUEBA
 		crearGrillaPersonas();
-
 		crearPanelEstadisticas();
 		crearPanelGrupos();
 		actualizarEstadisticas();
@@ -68,6 +61,7 @@ public class VentanaPrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	// ------------ Generacion de la barra de herramientas superior ----------------
 	public void crearBarraHerramientas() {
 		Color colorBackground = new Color(72, 95, 114);
 		EmptyBorder emptyBorder = new EmptyBorder(2, 10, 2, 10);
@@ -110,12 +104,16 @@ public class VentanaPrincipal extends JFrame {
 		toolBar.add(btn_CrearGrupos);
 	}
 
-	// ------------ Objetos utilizado para pruebas ---------------------------------
-	public void agregarPersonas() {
-		coordinador.agregarPersona("Matias", 4, 5, 4, 1); // ID 0
-		coordinador.agregarPersona("Carlos", 5, 1, 3, 5); // ID 1
-		coordinador.agregarPersona("Lionel", 5, 2, 3, 4); // ID 2
-		coordinador.agregarPersona("Andres", 4, 4, 3, 4); // ID 3
+	public void agregarGrupos() {
+		List<String> grupos = coordinador.obtenerGrupos();
+
+		while (modelTableGrupos.getRowCount() > 0) {
+			modelTableGrupos.removeRow(0);
+		}
+
+		for (int i = 0; i < grupos.size(); i++) {
+			modelTableGrupos.addRow(new String[] { "Grupo " + (i + 1), grupos.get(i) });
+		}
 	}
 
 	// ------------ Añadir componentes a la interfaz -------------------------------
@@ -131,8 +129,31 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(pnl_Personas);
 
 		tablaPersonas = new JTable();
-		modelTablaPersonas = new DefaultTableModel(0, 0);
+		tablaPersonas.addMouseListener(new MouseInputAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) { // Verificar si es un doble clic
+					int filaSeleccionada = tablaPersonas.getSelectedRow();
+					int columnaId = 0;
+
+					if (filaSeleccionada != -1 && columnaId != -1) {
+						Object valorCelda = tablaPersonas.getValueAt(filaSeleccionada, columnaId);
+						System.out.println("Valor de la celda seleccionada: " + valorCelda);
+						coordinador.mostrarVentanaEditarPersona(valorCelda.toString());
+					} else {
+						System.out.println("Ninguna celda seleccionada");
+					}
+				}
+			}
+		});
+		modelTablaPersonas = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		modelTablaPersonas.setColumnIdentifiers(columns);
+
 		actualizarTablaPersonas();
 
 		DefaultTableCellRenderer CellRender = new DefaultTableCellRenderer();
@@ -140,12 +161,32 @@ public class VentanaPrincipal extends JFrame {
 		for (int c = 0; c < columns.length; c++) {
 			tablaPersonas.getColumnModel().getColumn(c).setCellRenderer(CellRender);
 		}
+
 		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(10);
+
 		JScrollPane spl_TablaPersonas = new JScrollPane(tablaPersonas);
 		spl_TablaPersonas.setBounds(10, 20, 521, 233);
+
 		pnl_Personas.add(spl_TablaPersonas);
 	}
 
+	public void actualizarTablaPersonas() {
+		actualizarTabla(tablaPersonas, modelTablaPersonas, coordinador.obtenerPersonas());
+	}
+
+	public void actualizarTabla(JTable tabla, DefaultTableModel modeloTabla, List<Object[]> lista) {
+		while (tabla.getRowCount() > 0) {
+			modeloTabla.removeRow(0);
+		}
+
+		for (Object[] fila : lista) {
+			modeloTabla.addRow(fila);
+		}
+
+		tabla.setModel(modeloTabla);
+	}
+
+	// ------------ Crear panel de estadisticas y avance visual --------------------
 	public void crearPanelEstadisticas() {
 		JPanel pnl_Estadisticas = new JPanel();
 		pnl_Estadisticas.setForeground(new Color(255, 255, 255));
@@ -208,7 +249,6 @@ public class VentanaPrincipal extends JFrame {
 		txt_PromInteresEspectaculo.setBounds(165, 125, 130, 20);
 		txt_PromInteresEspectaculo.setEditable(false);
 		pnl_Estadisticas.add(txt_PromInteresEspectaculo);
-
 	}
 
 	public void crearPanelGrupos() {
@@ -221,7 +261,6 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(pnl_Grupos);
 
 		pnl_GruposTablas = new JPanel();
-		pnl_GruposTablas.setBorder(new LineBorder(new Color(0, 255, 0)));
 		pnl_GruposTablas.setBounds(10, 22, 1226, 276);
 		pnl_GruposTablas.setLayout(new GridLayout(1, 1, 0, 5));
 		pnl_Grupos.add(pnl_GruposTablas);
@@ -235,45 +274,15 @@ public class VentanaPrincipal extends JFrame {
 
 	public void actualizarTodo() {
 		actualizarTablaPersonas();
-
 		actualizarEstadisticas();
-	}
-
-	public void actualizarTablaPersonas() {
-		actualizarTabla(tablaPersonas, modelTablaPersonas, coordinador.obtenerPersonas());
-	}
-
-	public void actualizarTabla(JTable tabla, DefaultTableModel modeloTabla, List<Object[]> lista) {
-		while (tabla.getRowCount() > 0) {
-			modeloTabla.removeRow(0);
-		}
-
-		for (Object[] fila : lista) {
-			modeloTabla.addRow(fila);
-		}
-
-		tabla.setModel(modeloTabla);
 	}
 
 	public void actualizarEstadisticas() {
 		txt_CantPersonas.setText(coordinador.cantPersonas().toString());
-
 		txt_PromInteresDeporte.setText("");
 		txt_PromInteresMusica.setText("");
 		txt_PromInteresCiencia.setText("");
 		txt_PromInteresEspectaculo.setText("");
-	}
-
-	public void agregarGrupos() {
-		List<String> grupos = coordinador.obtenerGrupos();
-
-		while (modelTableGrupos.getRowCount() > 0) {
-			modelTableGrupos.removeRow(0);
-		}
-
-		for (int i = 0; i < grupos.size(); i++) {
-			modelTableGrupos.addRow(new String[] { "Grupo " + (i + 1), grupos.get(i) });
-		}
 	}
 
 }

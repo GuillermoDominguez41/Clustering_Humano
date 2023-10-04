@@ -1,0 +1,25 @@
+
+Librerias necesarias para iniciar la APP
+
+ -JUnit5
+ 	-Uso: Libreria de pruebas unitariasz
+ 	-Fuente: https://junit.org/junit5/	
+ 	
+ -FlatLaf
+ 	-Uso: Biblioteca de interfaz de usuario (UI) que proporciona un conjunto de apariencias y estilos para aplicaciones Swing.
+ 	-Ubicacion JAR: ../src/lib/flatlaf-3.2.1.jar
+ 	-Fuente: https://www.formdev.com/flatlaf/
+ 	
+ -FlatLaf IntelliJ
+ 	-Uso: Este complemento para FlatLaf incluye temas para aplicar de forma generica a la interfaz Swing.
+ 	-Ubicacion JAR: ../src/lib/flatlaf-intellij-themes-3.2.1.jar
+ 	-Fuente: https://www.formdev.com/flatlaf/themes/
+ 	
+ -SQLite
+ 	-Uso: Biblioteca para acceder y crear archivos de bases de datos SQLite en Java.
+ 	-Ubicacion JAR: ../src/lib/sqlite-jdbc-3.43.0.0.jar
+ 	-Fuente: https://github.com/xerial/sqlite-jdbc
+ 	
+ 
+ ELIMINAR SYSOUT:
+ 	-GrafoPersona → calcularCaminoMinimo();

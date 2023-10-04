@@ -2,6 +2,7 @@ package modelo.objetos;
 
 public class Persona {
 
+	private Integer id;
 	private String nombre;
 	private Integer InteresDeporte;
 	private Integer InteresMusica;
@@ -10,17 +11,34 @@ public class Persona {
 	private static Integer rangoMinimo = 1;
 	private static Integer rangoMaximo = 5;
 
-	public Persona(String Nombre, Integer ID, Integer IM, Integer IE, Integer IC) {
+	public Persona(String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
 
-		if (Nombre == null || ID == null || IM == null || IE == null || IC == null)
+		if (nombre == null || intDeporte == null || intMusica == null || intEspectaculo == null || intCiencia == null)
 			errorParametroNulo();
 		else {
-			this.nombre = Nombre;
-			if (interesValido(ID, IM, IE, IC)) {
-				this.InteresMusica = IM;
-				this.InteresDeporte = ID;
-				this.InteresEspectaculo = IE;
-				this.InteresCiencia = IC;
+			this.nombre = nombre;
+			if (interesValido(intDeporte, intMusica, intEspectaculo, intCiencia)) {
+				this.InteresDeporte = intDeporte;
+				this.InteresMusica = intMusica;
+				this.InteresEspectaculo = intEspectaculo;
+				this.InteresCiencia = intCiencia;
+			} else
+				errorParametroFueraDeRango();
+		}
+	}
+	
+	public Persona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
+
+		if (id == null || nombre == null || intDeporte == null || intMusica == null || intEspectaculo == null || intCiencia == null)
+			errorParametroNulo();
+		else {
+			this.id = id;
+			this.nombre = nombre;
+			if (interesValido(intDeporte, intMusica, intEspectaculo, intCiencia)) {
+				this.InteresDeporte = intDeporte;
+				this.InteresMusica = intMusica;
+				this.InteresEspectaculo = intEspectaculo;
+				this.InteresCiencia = intCiencia;
 			} else
 				errorParametroFueraDeRango();
 		}
@@ -52,6 +70,10 @@ public class Persona {
 
 	// ---------- Getters y Setters
 	// --------------------------------------------------------
+	public Integer id() {
+		return id;
+	}
+	
 	public String nombre() {
 		return nombre;
 	}

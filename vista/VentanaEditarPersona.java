@@ -15,28 +15,29 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-
 import controlador.Coordinador;
 
 @SuppressWarnings("serial")
-public class VentanaAgregarPersona extends JFrame {
-
+public class VentanaEditarPersona extends JFrame {
+	
 	private Coordinador coordinador;
 	private Integer rangoMinimo;
 	private Integer rangoMaximo;
+	private Integer idPersona;
+	private JTextField txt_Id;
 	private JTextField txt_Nombre;
 	private JComboBox<Integer> cbx_Deporte;
 	private JComboBox<Integer> cbx_Musica;
 	private JComboBox<Integer> cbx_Espectaculo;
 	private JComboBox<Integer> cbx_Ciencia;
 
-	public VentanaAgregarPersona(Coordinador coord) {	
+	public VentanaEditarPersona(Coordinador coord) {	
 		coordinador = coord;
 		rangoMinimo = coordinador.obtenerRangoMinimo();
 		rangoMaximo = coordinador.obtenerRangoMaximo();
 		
-		setSize(515, 225);
-		setTitle("Agregar Persona");
+		setSize(515, 300);
+		setTitle("Editar Persona");
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/agregarPersona32.png")));
 		setResizable(false);
@@ -45,8 +46,15 @@ public class VentanaAgregarPersona extends JFrame {
 		
 		agregarComponentes();
 	}
-	
-	public void mostrarVentana() {
+
+	public void mostrarVentana(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
+		this.idPersona = id;
+		this.txt_Id.setText(id.toString());
+		this.txt_Nombre.setText(nombre);
+		this.cbx_Deporte.setSelectedItem(5);
+		this.cbx_Musica.setSelectedItem(5);
+		this.cbx_Espectaculo.setSelectedItem(5);
+		this.cbx_Ciencia.setSelectedItem(5);
 		setVisible(true);  
 	}
 	
@@ -63,7 +71,7 @@ public class VentanaAgregarPersona extends JFrame {
 		cbx_Ciencia.setSelectedIndex(0);
 	}
 	
-	private void agregarComponentes() {			
+	private void agregarComponentes() {
 		JPanel pnl_AgregarPersona = new JPanel();
 		pnl_AgregarPersona.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnl_AgregarPersona.setLayout(null);
@@ -75,11 +83,16 @@ public class VentanaAgregarPersona extends JFrame {
 		lbl_Titulo.setFont(new Font("Tahoma", Font.BOLD, 13));
 		pnl_AgregarPersona.add(lbl_Titulo);
 
+		JLabel lbl_Id = new JLabel("ID");
+		lbl_Id.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lbl_Id.setBounds(52, 39, 133, 22);
+		pnl_AgregarPersona.add(lbl_Id);
+		
 		JLabel lbl_Nombre = new JLabel("Nombre");
 		lbl_Nombre.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lbl_Nombre.setBounds(52, 39, 133, 22);
 		pnl_AgregarPersona.add(lbl_Nombre);
-
+		
 		JLabel lbl_IntDeporte = new JLabel("Interes Deporte");
 		lbl_IntDeporte.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lbl_IntDeporte.setBounds(52, 66, 133, 22);
@@ -99,6 +112,10 @@ public class VentanaAgregarPersona extends JFrame {
 		lbl_IntCiencia.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lbl_IntCiencia.setBounds(52, 147, 133, 22);
 		pnl_AgregarPersona.add(lbl_IntCiencia);
+		
+		txt_Id= new JTextField();
+		txt_Id.setBounds(184, 39, 282, 22);
+		pnl_AgregarPersona.add(txt_Id);
 		
 		txt_Nombre = new JTextField();
 		txt_Nombre.setBounds(184, 39, 282, 22);
@@ -127,28 +144,39 @@ public class VentanaAgregarPersona extends JFrame {
 			cbx_Ciencia.addItem(i);
 		}
 
-		JButton btn_AgregarPersona = new JButton("Agregar");
-		btn_AgregarPersona.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btn_AgregarPersona.setBounds(152, 179, 100, 30);
-		btn_AgregarPersona.addMouseListener(new MouseAdapter() {
+		JButton btn_Actualizar = new JButton("Actualizar");
+		btn_Actualizar.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btn_Actualizar.setBounds(152, 179, 100, 30);
+		btn_Actualizar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String nombre = txt_Nombre.getText();
-				Integer iDeporte = (Integer) cbx_Deporte.getSelectedItem();
-				Integer iMusica = (Integer) cbx_Musica.getSelectedItem();
-				Integer iEspectaculo = (Integer) cbx_Espectaculo.getSelectedItem();
-				Integer iCiencia = (Integer) cbx_Ciencia.getSelectedItem();
+				if(txt_Nombre.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "ERROR, CAMPOS VACIOS");
+				}
 				
-				if (!nombre.isBlank() && iDeporte != null && iMusica != null && iEspectaculo != null && iCiencia != null) {
-					coordinador.agregarPersona(nombre, iDeporte, iMusica, iEspectaculo, iCiencia);
+				if(coordinador.actualizarPersona()) {
+					limpiarCampos();
+					JOptionPane.showMessageDialog(null, "SE ACTUALIZO CORRECTAMENTE");
 					coordinador.actualizarTodo();
-					coordinador.cerrarVentanaAgregarPersona();
+					coordinador.cerrarVentanaEditarPersona();
 				} else {
-					JOptionPane.showMessageDialog(null, "Error, se debe ingresar 'Nombre'");
+					JOptionPane.showMessageDialog(null, "ERROR, NO SE PUDO ACTUALIZAR");
 				}
 			}
 		});
-		pnl_AgregarPersona.add(btn_AgregarPersona);
+		pnl_AgregarPersona.add(btn_Actualizar);
+		
+		JButton btn_Eliminar = new JButton("Eliminar");
+		btn_Eliminar.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btn_Eliminar.setBounds(271, 179, 100, 30);
+		btn_Eliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				coordinador.cerrarVentanaAgregarPersona();
+			}
+		});
+		pnl_AgregarPersona.add(btn_Eliminar);
+		
 		
 		JButton btn_Cancelar = new JButton("Cancelar");
 		btn_Cancelar.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -160,6 +188,6 @@ public class VentanaAgregarPersona extends JFrame {
 			}
 		});
 		pnl_AgregarPersona.add(btn_Cancelar);
-	}	
+	}
 	
 }

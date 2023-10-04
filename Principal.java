@@ -1,19 +1,21 @@
 
 import modelo.Logica;
 import vista.VentanaAgregarPersona;
-
+import vista.VentanaEditarPersona;
 import vista.VentanaPrincipal;
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme;
-
+import bd.AdministradorBD;
 import javax.swing.*;
 import controlador.Coordinador;
 
 public class Principal {
 
-	private Logica logica;
 	private Coordinador coordinador;
+	private Logica logica;
+	private AdministradorBD admBD;
 	private VentanaPrincipal vPrincipal;
 	private VentanaAgregarPersona vAgregarPersona;
+	private VentanaEditarPersona vEditarPersona;
 
 	public static void main(String[] args) {
 		try {
@@ -30,10 +32,14 @@ public class Principal {
 		coordinador = new Coordinador();
 		logica = new Logica(coordinador);
 		coordinador.setLogica(logica);
+		admBD = new AdministradorBD();
+		coordinador.setAdministradorBD(admBD);
 		vPrincipal = new VentanaPrincipal(coordinador);
 		coordinador.setVentanaPrincipal(vPrincipal);
 		vAgregarPersona = new VentanaAgregarPersona(coordinador);
 		coordinador.setVentanaAgregarPersona(vAgregarPersona);
+		vEditarPersona = new VentanaEditarPersona(coordinador);
+		coordinador.setVentanaEditarPersona(vEditarPersona);
 
 		// Iniciamos la interfaz principal
 		vPrincipal.mostrarVentana();
