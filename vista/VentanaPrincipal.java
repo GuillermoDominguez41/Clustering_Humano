@@ -60,7 +60,7 @@ public class VentanaPrincipal extends JFrame {
 	public void mostrarVentana() {
 		setVisible(true);
 	}
-
+	
 	// ------------ Generacion de la barra de herramientas superior ----------------
 	public void crearBarraHerramientas() {
 		Color colorBackground = new Color(72, 95, 114);
@@ -134,12 +134,16 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) { // Verificar si es un doble clic
 					int filaSeleccionada = tablaPersonas.getSelectedRow();
-					int columnaId = 0;
 
-					if (filaSeleccionada != -1 && columnaId != -1) {
-						Object valorCelda = tablaPersonas.getValueAt(filaSeleccionada, columnaId);
-						System.out.println("Valor de la celda seleccionada: " + valorCelda);
-						coordinador.mostrarVentanaEditarPersona(valorCelda.toString());
+					if (filaSeleccionada != -1) {
+						String id = tablaPersonas.getValueAt(filaSeleccionada, 0).toString();
+						String nombre = tablaPersonas.getValueAt(filaSeleccionada, 1).toString();
+						String intDeporte = tablaPersonas.getValueAt(filaSeleccionada, 2).toString();
+						String intMusica = tablaPersonas.getValueAt(filaSeleccionada, 3).toString();
+						String intEspectaculo = tablaPersonas.getValueAt(filaSeleccionada, 4).toString();
+						String intCiencia = tablaPersonas.getValueAt(filaSeleccionada, 5).toString();
+						System.out.println("Valor de la celda seleccionada: " + id);
+						coordinador.mostrarVentanaEditarPersona( id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia );
 					} else {
 						System.out.println("Ninguna celda seleccionada");
 					}

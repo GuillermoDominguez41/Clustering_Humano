@@ -23,7 +23,6 @@ public class VentanaEditarPersona extends JFrame {
 	private Coordinador coordinador;
 	private Integer rangoMinimo;
 	private Integer rangoMaximo;
-	private Integer idPersona;
 	private JTextField txt_Id;
 	private JTextField txt_Nombre;
 	private JComboBox<Integer> cbx_Deporte;
@@ -47,14 +46,13 @@ public class VentanaEditarPersona extends JFrame {
 		agregarComponentes();
 	}
 
-	public void mostrarVentana(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
-		this.idPersona = id;
-		this.txt_Id.setText(id.toString());
+	public void mostrarVentana(String id, String nombre, String intDeporte, String intMusica, String intEspectaculo, String intCiencia) {
+		this.txt_Id.setText(id);
 		this.txt_Nombre.setText(nombre);
-		this.cbx_Deporte.setSelectedItem(5);
-		this.cbx_Musica.setSelectedItem(5);
-		this.cbx_Espectaculo.setSelectedItem(5);
-		this.cbx_Ciencia.setSelectedItem(5);
+		this.cbx_Deporte.setSelectedItem(Integer.parseInt(intDeporte));
+		this.cbx_Musica.setSelectedItem(Integer.parseInt(intMusica));
+		this.cbx_Espectaculo.setSelectedItem(Integer.parseInt(intEspectaculo));
+		this.cbx_Ciencia.setSelectedItem(Integer.parseInt(intCiencia));
 		setVisible(true);  
 	}
 	

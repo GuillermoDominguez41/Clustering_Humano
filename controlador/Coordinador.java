@@ -53,9 +53,9 @@ public class Coordinador {
 		hayDosVentanasAbiertas = false;
 	}
 	
-	public void mostrarVentanaEditarPersona(String idPersona) {
+	public void mostrarVentanaEditarPersona(String id, String nombre, String intDeporte, String intMusica, String intEspectaculo, String intCiencia) {
 		if (hayDosVentanasAbiertas == false) {
-			vEditarPersona.mostrarVentana();
+			vEditarPersona.mostrarVentana(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia);
 			hayDosVentanasAbiertas = true;
 		}
 	}
