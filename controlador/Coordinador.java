@@ -96,14 +96,10 @@ public class Coordinador {
 	}
 
 	public boolean actualizarPersona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
-		return administradorBD.actualizarUsuario(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
+		return administradorBD.actualizarPersona(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
 	}
 
-//	public void generarAristasEntreTodos() {
-//		logica.generarAristasEntreTodos();
-//	}
-//
-//	public List<String> generarGrupo() {
-//		return logica.generarGrupo();
-//	}
+	public boolean eliminarPersona(Integer idPersona) {
+		return administradorBD.eliminarPersona(idPersona);
+	}
 }

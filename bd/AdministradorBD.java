@@ -62,7 +62,7 @@ public class AdministradorBD {
 		return lista;
 	}
 
-	public boolean eliminarUsuario(int Id) {
+	public boolean eliminarPersona(int Id) {
 		PreparedStatement ps = null;
 		try {
 			ps = cx.conectar().prepareStatement("DELETE FROM " + tablaPersona + " WHERE id=?");
@@ -76,7 +76,7 @@ public class AdministradorBD {
 		}
 	}
 
-	public boolean actualizarUsuario(Persona personaPorActualizar) {
+	public boolean actualizarPersona(Persona personaPorActualizar) {
 		PreparedStatement ps = null;
 		try {
 			ps = cx.conectar().prepareStatement("UPDATE " + tablaPersona + " SET " + 

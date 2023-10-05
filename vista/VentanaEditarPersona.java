@@ -179,7 +179,19 @@ public class VentanaEditarPersona extends JFrame {
 		btn_Eliminar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				coordinador.cerrarVentanaAgregarPersona();
+				int consulta = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar este Usuario?",
+						"ELIMINAR USUARIO", JOptionPane.YES_NO_OPTION);
+				if (consulta == 0) {
+					Integer id = Integer.parseInt(txt_Id.getText());
+					if (coordinador.eliminarPersona(id)) {
+						limpiarCampos();
+						JOptionPane.showMessageDialog(null, "SE ELIMINO CORRECTAMENTE EL ID " + id);
+						coordinador.actualizarTodo();
+						coordinador.cerrarVentanaEditarPersona();
+					} else {
+						JOptionPane.showMessageDialog(null, "ERROR, NO SE PUDO ELIMINAR");
+					}
+				}
 			}
 		});
 		pnl_AgregarPersona.add(btn_Eliminar);
