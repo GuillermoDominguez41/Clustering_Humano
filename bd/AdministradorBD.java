@@ -84,8 +84,7 @@ public class AdministradorBD {
 					colPersona_InteresDeporte + "=?," + 
 					colPersona_InteresMusica  + "=?," + 
 					colPersona_InteresEspectaculo + "=?," + 
-					colPersona_InteresCiencia  + "=?," + 
-					" WHERE id=?");
+					colPersona_InteresCiencia  + "=? WHERE id=?");
 			ps.setString(1, personaPorActualizar.nombre());
 			ps.setInt(2, personaPorActualizar.interesDeporte());
 			ps.setInt(3, personaPorActualizar.interesMusica());

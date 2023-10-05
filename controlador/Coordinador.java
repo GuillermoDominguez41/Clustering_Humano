@@ -95,9 +95,8 @@ public class Coordinador {
 		vPrincipal.actualizarTodo();
 	}
 
-	public boolean actualizarPersona() {
-		
-		return true;
+	public boolean actualizarPersona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
+		return administradorBD.actualizarUsuario(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
 	}
 
 //	public void generarAristasEntreTodos() {
