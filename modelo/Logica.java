@@ -21,20 +21,10 @@ public class Logica {
 	}
 
 	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
+
 		grafo.agregarPersona(nuevaPersona);
 	}
 
-	public List<Object[]> obtenerPersonas() {
-		List<Object[]> lista = new ArrayList<>();
-		List<Persona> lp = grafo.nodos();
-
-		for (int ind = 0; ind < lp.size(); ind++) {
-			lista.add(new Object[] { ind, lp.get(ind).nombre(), lp.get(ind).interesDeporte(),
-					lp.get(ind).interesMusica(), lp.get(ind).interesEspectaculo(), lp.get(ind).interesCiencia() });
-		}
-
-		return lista;
-	}
 
 	public List<String> obtenerGrupos() {
 		grafo.calcularCaminoMinimo();
