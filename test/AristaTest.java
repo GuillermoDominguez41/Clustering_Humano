@@ -12,32 +12,32 @@ class AristaTest {
 	Persona personaTest_Juan = new Persona("Juan", 2, 2, 1, 4);
 	Persona personaTest_Eduardo = new Persona("Eduardo", 2, 2, 1, 4);
 
-	Arista a = new Arista(personaTest_Matias, personaTest_Lucas);
-	Arista b = new Arista(personaTest_Lucas, personaTest_Matias);
-	Arista c = new Arista(personaTest_Juan, personaTest_Eduardo);
+	Arista arista_Matias_Lucas = new Arista(personaTest_Matias, personaTest_Lucas);
+	Arista arista_Lucas_Matias = new Arista(personaTest_Lucas, personaTest_Matias);
+	Arista arista_Juan_Eduardo = new Arista(personaTest_Juan, personaTest_Eduardo);
 
 	@Test
 	public void AristasIguales() {
 
-		assertTrue(a.equals(b));
+		assertTrue(arista_Matias_Lucas.equals(arista_Lucas_Matias));
 
 	}
 
 	@Test
 	public void AristasDistintas() {
-		assertFalse(a.equals(c));
+		assertFalse(arista_Matias_Lucas.equals(arista_Juan_Eduardo));
 	}
 
 	@Test
 	public void aristaIgualANull() {
-		assertFalse(a.equals(null));
+		assertFalse(arista_Matias_Lucas.equals(null));
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void aristaOtroObjetoNoArista() {
 
-		assertFalse(a.equals(personaTest_Matias));
+		assertFalse(arista_Matias_Lucas.equals(personaTest_Matias));
 
 	}
 
