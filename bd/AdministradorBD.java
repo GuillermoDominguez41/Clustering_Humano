@@ -22,7 +22,6 @@ public class AdministradorBD {
 	}
 
 	public boolean insertarPersona(Persona nuevaPersona) {
-		System.out.println(nuevaPersona.toString());
 		PreparedStatement ps = null;
 		try {
 			ps = cx.conectar().prepareStatement("INSERT INTO " + tablaPersona + " VALUES(null,?,?,?,?,?)");

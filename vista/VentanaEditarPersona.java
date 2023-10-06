@@ -58,16 +58,7 @@ public class VentanaEditarPersona extends JFrame {
 	}
 
 	public void cerrarVentana() {
-		limpiarCampos();
 		setVisible(false);
-	}
-
-	private void limpiarCampos() {
-		txt_Nombre.setText("");
-		cbx_Deporte.setSelectedIndex(0);
-		cbx_Musica.setSelectedIndex(0);
-		cbx_Espectaculo.setSelectedIndex(0);
-		cbx_Ciencia.setSelectedIndex(0);
 	}
 
 	private void agregarComponentes() {
@@ -152,6 +143,7 @@ public class VentanaEditarPersona extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (txt_Nombre.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "ERROR, CAMPOS VACIOS");
+					return;
 				}
 				
 				Integer id = Integer.parseInt(txt_Id.getText());
@@ -162,7 +154,6 @@ public class VentanaEditarPersona extends JFrame {
 				Integer intCiencia = (Integer) cbx_Ciencia.getSelectedItem();
 
 				if (coordinador.actualizarPersona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia)) {
-					limpiarCampos();
 					JOptionPane.showMessageDialog(null, "SE ACTUALIZO CORRECTAMENTE");
 					coordinador.actualizarTodo();
 					coordinador.cerrarVentanaEditarPersona();
@@ -184,7 +175,6 @@ public class VentanaEditarPersona extends JFrame {
 				if (consulta == 0) {
 					Integer id = Integer.parseInt(txt_Id.getText());
 					if (coordinador.eliminarPersona(id)) {
-						limpiarCampos();
 						JOptionPane.showMessageDialog(null, "SE ELIMINO CORRECTAMENTE EL ID " + id);
 						coordinador.actualizarTodo();
 						coordinador.cerrarVentanaEditarPersona();
