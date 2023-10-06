@@ -30,10 +30,10 @@ public class Principal {
 	private void iniciar() {
 		// Se instancian las clases y se relacionan con el coordinador.
 		coordinador = new Coordinador();
-		logica = new Logica(coordinador);
-		coordinador.setLogica(logica);
 		admBD = new AdministradorBD();
 		coordinador.setAdministradorBD(admBD);
+		logica = new Logica(coordinador);
+		coordinador.setLogica(logica);
 		vPrincipal = new VentanaPrincipal(coordinador);
 		coordinador.setVentanaPrincipal(vPrincipal);
 		vAgregarPersona = new VentanaAgregarPersona(coordinador);

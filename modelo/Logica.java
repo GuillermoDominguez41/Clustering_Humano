@@ -11,20 +11,24 @@ import modelo.objetos.Persona;
 
 public class Logica {
 
-	@SuppressWarnings("unused")
 	private Coordinador coordinador;
 	private GrafoPersona grafo;
 
 	public Logica(Coordinador coord) {
 		grafo = new GrafoPersona();
 		coordinador = coord;
+		agregarListaDePersonas(coordinador.obtenerPersonasEnListaPersona());
 	}
 
 	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
-
 		grafo.agregarPersona(nuevaPersona);
 	}
-
+	
+	private void agregarListaDePersonas(List<Persona> listaPersonas) {
+		for(Persona p : listaPersonas) {
+			grafo.agregarPersona(p);
+		}
+	}
 
 	public List<String> obtenerGrupos() {
 		grafo.calcularCaminoMinimo();
@@ -41,13 +45,14 @@ public class Logica {
 		// distintos y eliminamos la arista 'x'
 		grupo1.add(agm.get(indiceMayorPeso).persona1().nombre());
 		grupo2.add(agm.get(indiceMayorPeso).persona2().nombre());
+		
+		System.out.println("Arista Mayor Peso:" + agm.get(indiceMayorPeso).toString());
 
 		agm.remove(indiceMayorPeso);
 
 		// 2° Comenzamos a recorrer la lista de aristas "AGM"
 		while ((grupo1.size() + grupo2.size()) < cantPersonas) {
 			removerArista(agm, grupo1, grupo2);
-
 		}
 
 		grupos.add(listaToString(grupo1));
@@ -60,20 +65,26 @@ public class Logica {
 
 		for (int a = 0; a < agm.size(); a++) {
 
-			/*
-			 * 3° Verificamos si alguna de las dos personas de la arista se encuentra en
-			 * algun grupo. Al encontrar relacion de una de las personas, agregamos la
-			 * "otra persona" al mismo grupo
-			 */
-
 			if (g1.contains(agm.get(a).persona1().nombre())) {
 				g1.add(agm.get(a).persona2().nombre());
+				agm.remove(a);
+				return;
+			}
+			
+			if (g1.contains(agm.get(a).persona2().nombre())) {
+				g1.add(agm.get(a).persona1().nombre());
 				agm.remove(a);
 				return;
 			}
 
 			if (g2.contains(agm.get(a).persona1().nombre())) {
 				g2.add(agm.get(a).persona2().nombre());
+				agm.remove(a);
+				return;
+			}
+			
+			if (g2.contains(agm.get(a).persona2().nombre())) {
+				g2.add(agm.get(a).persona1().nombre());
 				agm.remove(a);
 				return;
 			}

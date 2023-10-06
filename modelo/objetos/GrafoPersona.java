@@ -16,7 +16,7 @@ public class GrafoPersona {
 		nodos = new ArrayList<>();
 
 		caminoMinimo = new ArrayList<>();
-		indiceMayorPeso = Integer.MIN_VALUE;
+		indiceMayorPeso = 0;
 	}
 
 	public void agregarPersona(Persona persona) {
@@ -40,7 +40,6 @@ public class GrafoPersona {
 				int similitud = calcularSimilitud(nodos.get(i), nodos.get(j));
 				matrizAdyacencia[i][j] = similitud;
 				matrizAdyacencia[j][i] = similitud;
-
 			}
 		}
 	}
@@ -55,11 +54,11 @@ public class GrafoPersona {
 		boolean[] visitados = new boolean[n];
 		int[] padre = new int[n];
 		int[] costoMinimo = new int[n];
-
+		
 		for (int i = 0; i < n; i++) {
 			costoMinimo[i] = Integer.MAX_VALUE;
-		}
-
+		}		
+		
 		costoMinimo[0] = 0;
 
 		for (int i = 0; i < n - 1; i++) {
@@ -67,7 +66,6 @@ public class GrafoPersona {
 			visitados[u] = true;
 
 			for (int v = 0; v < n; v++) {
-//				System.out.println(nodos.get(i).nombre()+"-"+nodos.get(v).nombre() +" - "+ matrizAdyacencia[i][v] );
 				if (matrizAdyacencia[u][v] != 0 && !visitados[v] && matrizAdyacencia[u][v] < costoMinimo[v]) {
 					padre[v] = u;
 					costoMinimo[v] = matrizAdyacencia[u][v];
@@ -77,17 +75,18 @@ public class GrafoPersona {
 
 		// Imprime el camino mínimo
 		System.out.println("Camino minimo:");
+		Integer mayorValorSimilaridad = Integer.MIN_VALUE;
+		
 		for (int i = 1; i < n; i++) {
-			Persona padreNombre = nodos.get(padre[i]);
-			Persona hijoNombre = nodos.get(i);
-			int similaridad = matrizAdyacencia[i][padre[i]];
-			Arista aristaActual = new Arista(nodos.get(padre[i]), nodos.get(i), similaridad);
-			caminoMinimo.add(aristaActual);
-			System.out.println(padreNombre.nombre() + " - " + hijoNombre.nombre() + ": " + similaridad);
-			if (similaridad > indiceMayorPeso) {
-				indiceMayorPeso = i - 1;
-
+			Integer similaridad = matrizAdyacencia[i][padre[i]];
+			caminoMinimo.add(new Arista(nodos.get(padre[i]), nodos.get(i), similaridad));
+			System.out.println(nodos.get(padre[i]).nombre() + " - " + nodos.get(i).nombre() + ": " + similaridad);
+			
+			if (similaridad > mayorValorSimilaridad) {
+				mayorValorSimilaridad = similaridad;
+				indiceMayorPeso = caminoMinimo.size()-1;
 			}
+			
 		}
 
 	}

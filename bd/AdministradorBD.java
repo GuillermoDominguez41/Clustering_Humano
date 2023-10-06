@@ -16,6 +16,7 @@ public class AdministradorBD {
 	private String colPersona_InteresMusica = "interesMusica";
 	private String colPersona_InteresEspectaculo = "interesEspectaculo";
 	private String colPersona_InteresCiencia = "interesCiencia";
+	public enum FormatoLista {Object, Persona};
 
 	public AdministradorBD() {
 		cx = new Conexion();
@@ -39,10 +40,11 @@ public class AdministradorBD {
 		}
 	}
 
-	public List<Object[]> consultaPersonas() {
+	public List<Object[]> obtenerPersonasEnListaObject() {
 		List<Object[]> lista = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		
 		try {
 			ps = cx.conectar().prepareStatement("SELECT * FROM " + tablaPersona);
 			rs = ps.executeQuery();
@@ -53,7 +55,32 @@ public class AdministradorBD {
 				Integer intMusica = rs.getInt(colPersona_InteresMusica);
 				Integer intEspectaculo = rs.getInt(colPersona_InteresEspectaculo);
 				Integer intCiencia = rs.getInt(colPersona_InteresCiencia);
+
 				lista.add(new Object[] { id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia });
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	public List<Persona> obtenerPersonasEnListaPersona() {
+		List<Persona> lista = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = cx.conectar().prepareStatement("SELECT * FROM " + tablaPersona);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Integer id = rs.getInt(colPersona_id);
+				String nombre = rs.getString(colPersona_Nombre);
+				Integer intDeporte = rs.getInt(colPersona_InteresDeporte);
+				Integer intMusica = rs.getInt(colPersona_InteresMusica);
+				Integer intEspectaculo = rs.getInt(colPersona_InteresEspectaculo);
+				Integer intCiencia = rs.getInt(colPersona_InteresCiencia);
+				
+				lista.add(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

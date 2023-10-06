@@ -33,9 +33,8 @@ public class VentanaPrincipal extends JFrame {
 	private LineBorder lineBorder;
 	private JTable tablaPersonas;
 	private DefaultTableModel modelTablaPersonas, modelTableGrupos;
-	private JTextField txt_CantPersonas, txt_PromInteresDeporte, txt_PromInteresMusica, txt_PromInteresEspectaculo,
-			txt_PromInteresCiencia;
 	private JPanel pnl_GruposTablas;
+	private JTextField textField;
 
 	public VentanaPrincipal(Coordinador coord) {
 		coordinador = coord;
@@ -124,7 +123,7 @@ public class VentanaPrincipal extends JFrame {
 		pnl_Personas.setForeground(new Color(255, 255, 255));
 		pnl_Personas.setBorder(new TitledBorder(lineBorder, "Listado Personas", TitledBorder.LEFT, TitledBorder.TOP,
 				null, colorTextFont));
-		pnl_Personas.setBounds(10, 92, 541, 263);
+		pnl_Personas.setBounds(10, 196, 541, 477);
 		pnl_Personas.setLayout(null);
 		getContentPane().add(pnl_Personas);
 
@@ -142,7 +141,7 @@ public class VentanaPrincipal extends JFrame {
 						String intMusica = tablaPersonas.getValueAt(filaSeleccionada, 3).toString();
 						String intEspectaculo = tablaPersonas.getValueAt(filaSeleccionada, 4).toString();
 						String intCiencia = tablaPersonas.getValueAt(filaSeleccionada, 5).toString();
-						System.out.println("Valor de la celda seleccionada: " + id);
+
 						coordinador.mostrarVentanaEditarPersona( id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia );
 					} else {
 						System.out.println("Ninguna celda seleccionada");
@@ -169,13 +168,13 @@ public class VentanaPrincipal extends JFrame {
 		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(10);
 
 		JScrollPane spl_TablaPersonas = new JScrollPane(tablaPersonas);
-		spl_TablaPersonas.setBounds(10, 20, 521, 233);
+		spl_TablaPersonas.setBounds(10, 20, 521, 447);
 
 		pnl_Personas.add(spl_TablaPersonas);
 	}
 
 	public void actualizarTablaPersonas() {
-		actualizarTabla(tablaPersonas, modelTablaPersonas, coordinador.obtenerPersonas());
+		actualizarTabla(tablaPersonas, modelTablaPersonas, coordinador.obtenerPersonasEnListaObject());
 	}
 
 	public void actualizarTabla(JTable tabla, DefaultTableModel modeloTabla, List<Object[]> lista) {
@@ -196,63 +195,37 @@ public class VentanaPrincipal extends JFrame {
 		pnl_Estadisticas.setForeground(new Color(255, 255, 255));
 		pnl_Estadisticas.setBorder(new TitledBorder(lineBorder, "Estadisticas Generales", TitledBorder.LEFT,
 				TitledBorder.TOP, null, colorTextFont));
-		pnl_Estadisticas.setBounds(952, 92, 304, 263);
+		pnl_Estadisticas.setBounds(10, 92, 541, 94);
 		pnl_Estadisticas.setLayout(null);
 		getContentPane().add(pnl_Estadisticas);
-
-		JLabel lbl_CantPersonas = new JLabel("Personas registradas");
-		lbl_CantPersonas.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_CantPersonas.setBounds(10, 25, 155, 20);
-		pnl_Estadisticas.add(lbl_CantPersonas);
-
-		txt_CantPersonas = new JTextField();
-		txt_CantPersonas.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txt_CantPersonas.setBounds(165, 25, 130, 20);
-		txt_CantPersonas.setEditable(false);
-		pnl_Estadisticas.add(txt_CantPersonas);
-
-		JLabel lbl_PromInteresCiencia = new JLabel("Prom. Interes Ciencia");
-		lbl_PromInteresCiencia.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_PromInteresCiencia.setBounds(10, 50, 155, 20);
-		pnl_Estadisticas.add(lbl_PromInteresCiencia);
-		txt_PromInteresCiencia = new JTextField();
-		txt_PromInteresCiencia.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txt_PromInteresCiencia.setBounds(165, 50, 130, 20);
-		txt_PromInteresCiencia.setEditable(false);
-		pnl_Estadisticas.add(txt_PromInteresCiencia);
-
-		JLabel lbl_PromInteresDeporte = new JLabel("Prom. Interes Deporte");
-		lbl_PromInteresDeporte.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_PromInteresDeporte.setBounds(10, 75, 155, 20);
-		pnl_Estadisticas.add(lbl_PromInteresDeporte);
-
-		txt_PromInteresDeporte = new JTextField();
-		txt_PromInteresDeporte.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txt_PromInteresDeporte.setBounds(165, 75, 130, 20);
-		txt_PromInteresDeporte.setEditable(false);
-		pnl_Estadisticas.add(txt_PromInteresDeporte);
-
-		JLabel lbl_PromInteresMusica = new JLabel("Prom. Interes Musica");
-		lbl_PromInteresMusica.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_PromInteresMusica.setBounds(10, 100, 155, 20);
-		pnl_Estadisticas.add(lbl_PromInteresMusica);
-
-		txt_PromInteresMusica = new JTextField();
-		txt_PromInteresMusica.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txt_PromInteresMusica.setBounds(165, 100, 130, 20);
-		txt_PromInteresMusica.setEditable(false);
-		pnl_Estadisticas.add(txt_PromInteresMusica);
-
-		JLabel lbl_PromInteresEspectaculo = new JLabel("Prom. Interes Espectaculo");
-		lbl_PromInteresEspectaculo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lbl_PromInteresEspectaculo.setBounds(10, 125, 155, 20);
-		pnl_Estadisticas.add(lbl_PromInteresEspectaculo);
-
-		txt_PromInteresEspectaculo = new JTextField();
-		txt_PromInteresEspectaculo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txt_PromInteresEspectaculo.setBounds(165, 125, 130, 20);
-		txt_PromInteresEspectaculo.setEditable(false);
-		pnl_Estadisticas.add(txt_PromInteresEspectaculo);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(10, 20, 101, 65);
+		pnl_Estadisticas.add(panel);
+		panel.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBackground(new Color(255, 255, 255));
+		textField.setForeground(new Color(255, 128, 0));
+		textField.setBounds(0, 0, 101, 35);
+		panel.add(textField);
+		textField.setText("25");
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Verdana", Font.BOLD, 20));
+		textField.setEditable(false);
+		
+		JLabel lbl_CantPersonas_2 = new JLabel("Promedio");
+		lbl_CantPersonas_2.setBounds(0, 35, 101, 15);
+		panel.add(lbl_CantPersonas_2);
+		lbl_CantPersonas_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CantPersonas_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
+		JLabel lbl_CantPersonas_1_1 = new JLabel("Int. Espectaculo");
+		lbl_CantPersonas_1_1.setBounds(0, 50, 101, 15);
+		panel.add(lbl_CantPersonas_1_1);
+		lbl_CantPersonas_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_CantPersonas_1_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 	}
 
 	public void crearPanelGrupos() {
@@ -260,17 +233,17 @@ public class VentanaPrincipal extends JFrame {
 		pnl_Grupos.setForeground(new Color(255, 255, 255));
 		pnl_Grupos.setBorder(
 				new TitledBorder(lineBorder, "Grupos", TitledBorder.LEFT, TitledBorder.TOP, null, colorTextFont));
-		pnl_Grupos.setBounds(10, 365, 1246, 308);
+		pnl_Grupos.setBounds(561, 92, 695, 581);
 		pnl_Grupos.setLayout(null);
 		getContentPane().add(pnl_Grupos);
 
 		pnl_GruposTablas = new JPanel();
-		pnl_GruposTablas.setBounds(10, 22, 1226, 276);
+		pnl_GruposTablas.setBounds(10, 22, 675, 549);
 		pnl_GruposTablas.setLayout(new GridLayout(1, 1, 0, 5));
 		pnl_Grupos.add(pnl_GruposTablas);
 
 		modelTableGrupos = new DefaultTableModel();
-		modelTableGrupos.setColumnIdentifiers(new String[] { "Grupo", "Persona" });
+		modelTableGrupos.setColumnIdentifiers(new String[] { "Grupo", "Persona", "Promedio Interes" });
 		JTable table = new JTable(modelTableGrupos);
 		JScrollPane scrollPane = new JScrollPane(table);
 		pnl_GruposTablas.add(scrollPane);
@@ -282,11 +255,5 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void actualizarEstadisticas() {
-		txt_CantPersonas.setText(coordinador.cantPersonas().toString());
-		txt_PromInteresDeporte.setText("");
-		txt_PromInteresMusica.setText("");
-		txt_PromInteresCiencia.setText("");
-		txt_PromInteresEspectaculo.setText("");
 	}
-
 }

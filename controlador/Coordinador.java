@@ -79,10 +79,14 @@ public class Coordinador {
 		administradorBD.insertarPersona(nuevaPersona);
 	}
 
-	public List<Object[]> obtenerPersonas() {
-		return administradorBD.consultaPersonas();
+	public List<Object[]> obtenerPersonasEnListaObject() {
+		return administradorBD.obtenerPersonasEnListaObject();
 	}
-
+	
+	public List<Persona> obtenerPersonasEnListaPersona() {
+		return administradorBD.obtenerPersonasEnListaPersona();
+	}
+	
 	public List<String> obtenerGrupos() {
 		return logica.obtenerGrupos();
 	}
