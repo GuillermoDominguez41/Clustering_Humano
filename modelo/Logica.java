@@ -30,14 +30,14 @@ public class Logica {
 		}
 	}
 
-	public List<String> obtenerGrupos() {
+	public List<Object[]> obtenerGrupos() {
 		grafo.calcularCaminoMinimo();
 
 		List<Arista> agm = grafo.caminoMinimo();
 		int indiceMayorPeso = grafo.aristaMayorPeso();
 		int cantPersonas = cantPersonas();
 
-		List<String> grupos = new ArrayList<>();
+		List<Object[]> grupos = new ArrayList<>();
 		Set<String> grupo1 = new HashSet<String>();
 		Set<String> grupo2 = new HashSet<String>();
 
@@ -55,8 +55,8 @@ public class Logica {
 			removerArista(agm, grupo1, grupo2);
 		}
 
-		grupos.add(listaToString(grupo1));
-		grupos.add(listaToString(grupo2));
+		grupos.add(new Object[]{"Grupo 1", listaToString(grupo1)});
+		grupos.add(new Object[]{"Grupo 2", listaToString(grupo2)});
 
 		return grupos;
 	}

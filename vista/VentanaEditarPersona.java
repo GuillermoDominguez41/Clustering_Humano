@@ -155,7 +155,7 @@ public class VentanaEditarPersona extends JFrame {
 
 				if (coordinador.actualizarPersona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia)) {
 					JOptionPane.showMessageDialog(null, "SE ACTUALIZO CORRECTAMENTE");
-					coordinador.actualizarTodo();
+					coordinador.actualizarDatosInterfaz();
 					coordinador.cerrarVentanaEditarPersona();
 				} else {
 					JOptionPane.showMessageDialog(null, "ERROR, NO SE PUDO ACTUALIZAR");
@@ -176,7 +176,7 @@ public class VentanaEditarPersona extends JFrame {
 					Integer id = Integer.parseInt(txt_Id.getText());
 					if (coordinador.eliminarPersona(id)) {
 						JOptionPane.showMessageDialog(null, "SE ELIMINO CORRECTAMENTE EL ID " + id);
-						coordinador.actualizarTodo();
+						coordinador.actualizarDatosInterfaz();
 						coordinador.cerrarVentanaEditarPersona();
 					} else {
 						JOptionPane.showMessageDialog(null, "ERROR, NO SE PUDO ELIMINAR");

@@ -141,7 +141,7 @@ public class VentanaAgregarPersona extends JFrame {
 				
 				if (!nombre.isBlank() && iDeporte != null && iMusica != null && iEspectaculo != null && iCiencia != null) {
 					coordinador.agregarPersona(nombre, iDeporte, iMusica, iEspectaculo, iCiencia);
-					coordinador.actualizarTodo();
+					coordinador.actualizarDatosInterfaz();
 					coordinador.cerrarVentanaAgregarPersona();
 				} else {
 					JOptionPane.showMessageDialog(null, "Error, se debe ingresar 'Nombre'");

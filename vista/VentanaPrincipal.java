@@ -6,7 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import controlador.Coordinador;
 
@@ -29,15 +27,16 @@ import controlador.Coordinador;
 public class VentanaPrincipal extends JFrame {
 
 	private Coordinador coordinador;
+	private AdmTablas admTabla;
 	private Color colorTextFont;
 	private LineBorder lineBorder;
-	private JTable tablaPersonas;
-	private DefaultTableModel modelTablaPersonas, modelTableGrupos;
+	private JTable tablaPersonas, tablaGrupos;
 	private JPanel pnl_GruposTablas;
 	private JTextField textField;
 
 	public VentanaPrincipal(Coordinador coord) {
 		coordinador = coord;
+		admTabla = new AdmTablas();
 		colorTextFont = new Color(111, 145, 173);
 		lineBorder = new LineBorder(new Color(39, 57, 88), 1, true);
 
@@ -97,22 +96,10 @@ public class VentanaPrincipal extends JFrame {
 		btn_CrearGrupos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				agregarGrupos();
+				actualizarTablaGrupos();
 			}
 		});
 		toolBar.add(btn_CrearGrupos);
-	}
-
-	public void agregarGrupos() {
-		List<String> grupos = coordinador.obtenerGrupos();
-
-		while (modelTableGrupos.getRowCount() > 0) {
-			modelTableGrupos.removeRow(0);
-		}
-
-		for (int i = 0; i < grupos.size(); i++) {
-			modelTableGrupos.addRow(new String[] { "Grupo " + (i + 1), grupos.get(i) });
-		}
 	}
 
 	// ------------ Añadir componentes a la interfaz -------------------------------
@@ -149,44 +136,17 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
-		modelTablaPersonas = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		modelTablaPersonas.setColumnIdentifiers(columns);
-
-		actualizarTablaPersonas();
-
-		DefaultTableCellRenderer CellRender = new DefaultTableCellRenderer();
-		CellRender.setHorizontalAlignment(SwingConstants.CENTER);
-		for (int c = 0; c < columns.length; c++) {
-			tablaPersonas.getColumnModel().getColumn(c).setCellRenderer(CellRender);
-		}
-
-		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(10);
+		
+		admTabla.setModeloNoEditable(tablaPersonas);
+		admTabla.setTituloColumnas(tablaPersonas, columns);
+		admTabla.setValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
+		admTabla.centrarValoresEnCeldas(tablaPersonas);
+		admTabla.ajustarAnchoColumna(tablaPersonas, 0, 10);
 
 		JScrollPane spl_TablaPersonas = new JScrollPane(tablaPersonas);
 		spl_TablaPersonas.setBounds(10, 20, 521, 447);
 
 		pnl_Personas.add(spl_TablaPersonas);
-	}
-
-	public void actualizarTablaPersonas() {
-		actualizarTabla(tablaPersonas, modelTablaPersonas, coordinador.obtenerPersonasEnListaObject());
-	}
-
-	public void actualizarTabla(JTable tabla, DefaultTableModel modeloTabla, List<Object[]> lista) {
-		while (tabla.getRowCount() > 0) {
-			modeloTabla.removeRow(0);
-		}
-
-		for (Object[] fila : lista) {
-			modeloTabla.addRow(fila);
-		}
-
-		tabla.setModel(modeloTabla);
 	}
 
 	// ------------ Crear panel de estadisticas y avance visual --------------------
@@ -229,6 +189,8 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void crearPanelGrupos() {
+		String[] columnas = new String[] { "Grupo", "Persona", "Promedio Interes" };
+		
 		JPanel pnl_Grupos = new JPanel();
 		pnl_Grupos.setForeground(new Color(255, 255, 255));
 		pnl_Grupos.setBorder(
@@ -242,18 +204,31 @@ public class VentanaPrincipal extends JFrame {
 		pnl_GruposTablas.setLayout(new GridLayout(1, 1, 0, 5));
 		pnl_Grupos.add(pnl_GruposTablas);
 
-		modelTableGrupos = new DefaultTableModel();
-		modelTableGrupos.setColumnIdentifiers(new String[] { "Grupo", "Persona", "Promedio Interes" });
-		JTable table = new JTable(modelTableGrupos);
-		JScrollPane scrollPane = new JScrollPane(table);
+		tablaGrupos = new JTable();
+		admTabla.setModeloNoEditable(tablaGrupos);
+		admTabla.setTituloColumnas(tablaGrupos, columnas);
+
+		JScrollPane scrollPane = new JScrollPane(tablaGrupos);
 		pnl_GruposTablas.add(scrollPane);
 	}
-
-	public void actualizarTodo() {
+	
+	
+// Metodos dedicados a la actualizacion de datos en la interfaz
+	
+	public void actualizarDatosInterfaz() {
 		actualizarTablaPersonas();
 		actualizarEstadisticas();
 	}
+	
+	private void actualizarTablaPersonas() {
+		admTabla.setValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
+	}
+	
+	private void actualizarTablaGrupos() {
+		admTabla.setValores(tablaGrupos, coordinador.obtenerGrupos());
+	}
 
 	public void actualizarEstadisticas() {
+		
 	}
 }

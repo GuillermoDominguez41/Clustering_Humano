@@ -78,6 +78,14 @@ public class Coordinador {
 		logica.agregarPersonaEnGrafo(nuevaPersona);
 		administradorBD.insertarPersona(nuevaPersona);
 	}
+	
+	public boolean actualizarPersona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
+		return administradorBD.actualizarPersona(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
+	}
+
+	public boolean eliminarPersona(Integer idPersona) {
+		return administradorBD.eliminarPersona(idPersona);
+	}
 
 	public List<Object[]> obtenerPersonasEnListaObject() {
 		return administradorBD.obtenerPersonasEnListaObject();
@@ -87,7 +95,7 @@ public class Coordinador {
 		return administradorBD.obtenerPersonasEnListaPersona();
 	}
 	
-	public List<String> obtenerGrupos() {
+	public List<Object[]> obtenerGrupos() {
 		return logica.obtenerGrupos();
 	}
 
@@ -95,15 +103,7 @@ public class Coordinador {
 		return logica.cantPersonas();
 	}
 
-	public void actualizarTodo() {
-		vPrincipal.actualizarTodo();
-	}
-
-	public boolean actualizarPersona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
-		return administradorBD.actualizarPersona(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
-	}
-
-	public boolean eliminarPersona(Integer idPersona) {
-		return administradorBD.eliminarPersona(idPersona);
+	public void actualizarDatosInterfaz() {
+		vPrincipal.actualizarDatosInterfaz();
 	}
 }
