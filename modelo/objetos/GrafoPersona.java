@@ -44,6 +44,10 @@ public class GrafoPersona {
 		}
 	}
 
+	public void eliminarPersonas() {
+		nodos.clear();
+	}
+
 	private int calcularSimilitud(Persona p1, Persona p2) {
 		return p1.calcularIndiceSimilitud(p2);
 	}
@@ -54,11 +58,11 @@ public class GrafoPersona {
 		boolean[] visitados = new boolean[n];
 		int[] padre = new int[n];
 		int[] costoMinimo = new int[n];
-		
+
 		for (int i = 0; i < n; i++) {
 			costoMinimo[i] = Integer.MAX_VALUE;
-		}		
-		
+		}
+
 		costoMinimo[0] = 0;
 
 		for (int i = 0; i < n - 1; i++) {
@@ -76,17 +80,17 @@ public class GrafoPersona {
 		// Imprime el camino mínimo
 		System.out.println("Camino minimo:");
 		Integer mayorValorSimilaridad = Integer.MIN_VALUE;
-		
+
 		for (int i = 1; i < n; i++) {
 			Integer similaridad = matrizAdyacencia[i][padre[i]];
 			caminoMinimo.add(new Arista(nodos.get(padre[i]), nodos.get(i), similaridad));
 			System.out.println(nodos.get(padre[i]).nombre() + " - " + nodos.get(i).nombre() + ": " + similaridad);
-			
+
 			if (similaridad > mayorValorSimilaridad) {
 				mayorValorSimilaridad = similaridad;
-				indiceMayorPeso = caminoMinimo.size()-1;
+				indiceMayorPeso = caminoMinimo.size() - 1;
 			}
-			
+
 		}
 
 	}

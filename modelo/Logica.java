@@ -14,18 +14,30 @@ public class Logica {
 	private Coordinador coordinador;
 	private GrafoPersona grafo;
 
+	private Integer promedioInteresPersonas;
+	private Integer promedioInteresCiencia;
+	private Integer promedioInteresDeportes;
+	private Integer promedioInteresMusica;
+	private Integer promedioInteresEspectaculos;
+
 	public Logica(Coordinador coord) {
 		grafo = new GrafoPersona();
 		coordinador = coord;
 		agregarListaDePersonas(coordinador.obtenerPersonasEnListaPersona());
 	}
 
+	public Logica() {
+		grafo = new GrafoPersona();
+	}
+
 	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
 		grafo.agregarPersona(nuevaPersona);
 	}
-	
-	private void agregarListaDePersonas(List<Persona> listaPersonas) {
-		for(Persona p : listaPersonas) {
+
+	public void agregarListaDePersonas(List<Persona> listaPersonas) {
+		grafo.eliminarPersonas();
+
+		for (Persona p : listaPersonas) {
 			grafo.agregarPersona(p);
 		}
 	}
@@ -45,7 +57,7 @@ public class Logica {
 		// distintos y eliminamos la arista 'x'
 		grupo1.add(agm.get(indiceMayorPeso).persona1().nombre());
 		grupo2.add(agm.get(indiceMayorPeso).persona2().nombre());
-		
+
 		System.out.println("Arista Mayor Peso:" + agm.get(indiceMayorPeso).toString());
 
 		agm.remove(indiceMayorPeso);
@@ -55,8 +67,8 @@ public class Logica {
 			removerArista(agm, grupo1, grupo2);
 		}
 
-		grupos.add(new Object[]{"Grupo 1", listaToString(grupo1)});
-		grupos.add(new Object[]{"Grupo 2", listaToString(grupo2)});
+		grupos.add(new Object[] { "Grupo 1", listaToString(grupo1) });
+		grupos.add(new Object[] { "Grupo 2", listaToString(grupo2) });
 
 		return grupos;
 	}
@@ -70,7 +82,7 @@ public class Logica {
 				agm.remove(a);
 				return;
 			}
-			
+
 			if (g1.contains(agm.get(a).persona2().nombre())) {
 				g1.add(agm.get(a).persona1().nombre());
 				agm.remove(a);
@@ -82,7 +94,7 @@ public class Logica {
 				agm.remove(a);
 				return;
 			}
-			
+
 			if (g2.contains(agm.get(a).persona2().nombre())) {
 				g2.add(agm.get(a).persona1().nombre());
 				agm.remove(a);
@@ -112,24 +124,47 @@ public class Logica {
 		return grafo.nodos().size();
 	}
 
-	public Integer promInteresDeporte() {
+	public void promInteres() {
+		List<Persona> lista = grafo.nodos();
+
+		Integer cantPersonas = lista.size();
+		Integer acumuladorInteresDeporte = 0;
+		Integer acumuladorInteresCiencia = 0;
+		Integer acumuladorInteresMusica = 0;
+		Integer acumuladorInteresEspectaculos = 0;
+
+		for (Persona persona : lista) {
+			acumuladorInteresDeporte += persona.interesDeporte();
+			acumuladorInteresCiencia += persona.interesCiencia();
+			acumuladorInteresMusica += persona.interesMusica();
+			acumuladorInteresEspectaculos += persona.interesEspectaculo();
+
+		}
+
+		promedioInteresDeportes = acumuladorInteresDeporte / cantPersonas;
+		promedioInteresCiencia = acumuladorInteresCiencia / cantPersonas;
+		promedioInteresMusica = acumuladorInteresMusica / cantPersonas;
+		promedioInteresEspectaculos = acumuladorInteresEspectaculos / cantPersonas;
+	}
+
+	public Integer promInteresDeportes() {
 		// TODO Auto-generated method stub
-		return null;
+		return promedioInteresDeportes;
 	}
 
 	public Integer promInteresMusica() {
-		// TODO Auto-generated method stub
-		return null;
+		return promedioInteresMusica;
+
 	}
 
 	public Integer promInteresEspectaculo() {
 		// TODO Auto-generated method stub
-		return null;
+		return promedioInteresEspectaculos;
 	}
 
 	public Integer promInteresCiencia() {
 		// TODO Auto-generated method stub
-		return null;
+		return promedioInteresCiencia;
 	}
 
 }
