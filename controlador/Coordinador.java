@@ -80,11 +80,19 @@ public class Coordinador {
 	}
 	
 	public boolean actualizarPersona(Integer id, String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
-		return administradorBD.actualizarPersona(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
+		boolean actualizadoEnBD = administradorBD.actualizarPersona(new Persona(id, nombre, intDeporte, intMusica, intEspectaculo, intCiencia));
+		if(actualizadoEnBD) {
+			logica.sincronizarPersonasConBD(administradorBD.obtenerPersonasEnListaPersona());
+		}
+		return actualizadoEnBD;
 	}
 
 	public boolean eliminarPersona(Integer idPersona) {
-		return administradorBD.eliminarPersona(idPersona);
+		boolean eliminadoEnBD =  administradorBD.eliminarPersona(idPersona);
+		if(eliminadoEnBD) {
+			logica.sincronizarPersonasConBD(administradorBD.obtenerPersonasEnListaPersona());
+		}
+		return eliminadoEnBD;
 	}
 
 	public List<Object[]> obtenerPersonasEnListaObject() {

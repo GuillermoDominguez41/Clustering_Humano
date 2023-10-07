@@ -23,7 +23,7 @@ public class Logica {
 	public Logica(Coordinador coord) {
 		grafo = new GrafoPersona();
 		coordinador = coord;
-		agregarListaDePersonas(coordinador.obtenerPersonasEnListaPersona());
+		sincronizarPersonasConBD(coordinador.obtenerPersonasEnListaPersona());
 	}
 
 	public Logica() {
@@ -34,7 +34,7 @@ public class Logica {
 		grafo.agregarPersona(nuevaPersona);
 	}
 
-	public void agregarListaDePersonas(List<Persona> listaPersonas) {
+	public void sincronizarPersonasConBD(List<Persona> listaPersonas) {
 		grafo.eliminarPersonas();
 
 		for (Persona p : listaPersonas) {
