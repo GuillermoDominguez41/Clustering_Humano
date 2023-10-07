@@ -1,7 +1,7 @@
 package controlador;
 
 import java.util.List;
-import bd.AdministradorBD;
+import bd.AdmBaseDatos;
 import modelo.Logica;
 import modelo.objetos.Persona;
 import vista.VentanaAgregarPersona;
@@ -11,7 +11,7 @@ import vista.VentanaPrincipal;
 public class Coordinador {
 
 	private Logica logica;
-	private AdministradorBD administradorBD;
+	private AdmBaseDatos administradorBD;
 	private VentanaPrincipal vPrincipal;
 	private VentanaAgregarPersona vAgregarPersona;
 	private VentanaEditarPersona vEditarPersona;
@@ -25,7 +25,7 @@ public class Coordinador {
 		logica = l;
 	}
 	
-	public void setAdministradorBD(AdministradorBD admBD) {
+	public void setAdministradorBD(AdmBaseDatos admBD) {
 		administradorBD = admBD; 
 	}
 

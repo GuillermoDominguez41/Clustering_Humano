@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.objetos.Persona;
 
-public class AdministradorBD {
+public class AdmBaseDatos {
 	private Conexion cx;
 	private String tablaPersona = "Personas";
 	private String colPersona_id = "id";
@@ -18,7 +18,7 @@ public class AdministradorBD {
 	private String colPersona_InteresCiencia = "interesCiencia";
 	public enum FormatoLista {Object, Persona};
 
-	public AdministradorBD() {
+	public AdmBaseDatos() {
 		cx = new Conexion();
 	}
 
