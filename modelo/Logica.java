@@ -14,11 +14,7 @@ public class Logica {
 	private Coordinador coordinador;
 	private GrafoPersona grafo;
 
-	private Integer promedioInteresPersonas;
-	private Integer promedioInteresCiencia;
-	private Integer promedioInteresDeportes;
-	private Integer promedioInteresMusica;
-	private Integer promedioInteresEspectaculos;
+	private Integer promedioInteresCiencia, promedioInteresDeportes, promedioInteresMusica, promedioInteresEspectaculos;
 
 	public Logica(Coordinador coord) {
 		grafo = new GrafoPersona();
@@ -148,7 +144,6 @@ public class Logica {
 	}
 
 	public Integer promInteresDeportes() {
-		// TODO Auto-generated method stub
 		return promedioInteresDeportes;
 	}
 
@@ -158,12 +153,10 @@ public class Logica {
 	}
 
 	public Integer promInteresEspectaculo() {
-		// TODO Auto-generated method stub
 		return promedioInteresEspectaculos;
 	}
 
 	public Integer promInteresCiencia() {
-		// TODO Auto-generated method stub
 		return promedioInteresCiencia;
 	}
 
