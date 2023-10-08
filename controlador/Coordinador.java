@@ -107,11 +107,28 @@ public class Coordinador {
 		return logica.obtenerGrupos();
 	}
 
-	public Integer cantPersonas() {
-		return logica.cantPersonas();
-	}
-
-	public void actualizarDatosInterfaz() {
+	public void actualizarDatosInterfaz() {		
 		vPrincipal.actualizarDatosInterfaz();
 	}
+	
+	public String cantPersonas() {
+		return logica.cantPersonas().toString();
+	}
+	
+	public String promInteresDeportes() {
+		return logica.promInteresDeportes().toString();
+	}
+
+	public String promInteresMusica() {
+		return logica.promInteresMusica().toString();
+	}
+
+	public String promInteresEspectaculo() {
+		return logica.promInteresEspectaculo().toString();
+	}
+
+	public String promInteresCiencia() {
+		return logica.promInteresCiencia().toString();
+	}
+	
 }

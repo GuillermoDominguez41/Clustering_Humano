@@ -13,12 +13,12 @@ public class Logica {
 
 	private Coordinador coordinador;
 	private GrafoPersona grafo;
-
-	private Integer promedioInteresCiencia, promedioInteresDeportes, promedioInteresMusica, promedioInteresEspectaculos;
+	private Integer acumInteresDeporte, acumInteresMusica, acumInteresEspectaculos, acumInteresCiencia;
 
 	public Logica(Coordinador coord) {
 		grafo = new GrafoPersona();
 		coordinador = coord;
+		iniciarAcumuladoresIntereses();
 		sincronizarPersonasConBD(coordinador.obtenerPersonasEnListaPersona());
 	}
 
@@ -26,16 +26,28 @@ public class Logica {
 		grafo = new GrafoPersona();
 	}
 
-	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
-		grafo.agregarPersona(nuevaPersona);
+	private void iniciarAcumuladoresIntereses() {
+		acumInteresDeporte = 0;
+		acumInteresMusica = 0;
+		acumInteresEspectaculos = 0;
+		acumInteresCiencia = 0;
 	}
-
+	
 	public void sincronizarPersonasConBD(List<Persona> listaPersonas) {
 		grafo.eliminarPersonas();
-
+		iniciarAcumuladoresIntereses();
+		
 		for (Persona p : listaPersonas) {
-			grafo.agregarPersona(p);
+			agregarPersonaEnGrafo(p);
 		}
+	}
+	
+	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
+		grafo.agregarPersona(nuevaPersona);
+		acumInteresDeporte += nuevaPersona.interesDeporte();
+		acumInteresMusica += nuevaPersona.interesMusica();
+		acumInteresEspectaculos += nuevaPersona.interesEspectaculo();
+		acumInteresCiencia += nuevaPersona.interesCiencia();
 	}
 
 	public List<Object[]> obtenerGrupos() {
@@ -115,49 +127,31 @@ public class Logica {
 	public Integer rangoMaximo() {
 		return Persona.rangoMaximo();
 	}
-
+	
 	public Integer cantPersonas() {
 		return grafo.nodos().size();
 	}
-
-	public void promInteres() {
-		List<Persona> lista = grafo.nodos();
-
-		Integer cantPersonas = lista.size();
-		Integer acumuladorInteresDeporte = 0;
-		Integer acumuladorInteresCiencia = 0;
-		Integer acumuladorInteresMusica = 0;
-		Integer acumuladorInteresEspectaculos = 0;
-
-		for (Persona persona : lista) {
-			acumuladorInteresDeporte += persona.interesDeporte();
-			acumuladorInteresCiencia += persona.interesCiencia();
-			acumuladorInteresMusica += persona.interesMusica();
-			acumuladorInteresEspectaculos += persona.interesEspectaculo();
-
-		}
-
-		promedioInteresDeportes = acumuladorInteresDeporte / cantPersonas;
-		promedioInteresCiencia = acumuladorInteresCiencia / cantPersonas;
-		promedioInteresMusica = acumuladorInteresMusica / cantPersonas;
-		promedioInteresEspectaculos = acumuladorInteresEspectaculos / cantPersonas;
-	}
-
+	
 	public Integer promInteresDeportes() {
-		return promedioInteresDeportes;
+		return promedioInteresValido(acumInteresDeporte);
 	}
 
 	public Integer promInteresMusica() {
-		return promedioInteresMusica;
-
+		return promedioInteresValido(acumInteresMusica);
 	}
 
 	public Integer promInteresEspectaculo() {
-		return promedioInteresEspectaculos;
+		return promedioInteresValido(acumInteresEspectaculos);
 	}
 
 	public Integer promInteresCiencia() {
-		return promedioInteresCiencia;
+		return promedioInteresValido(acumInteresCiencia);
 	}
 
+	private Integer promedioInteresValido(Integer acumuladorInteres) {		
+		if (acumuladorInteres < cantPersonas())
+			return 0;
+		return acumuladorInteres/cantPersonas();
+	}
+	
 }

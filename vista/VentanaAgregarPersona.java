@@ -22,20 +22,15 @@ import controlador.Coordinador;
 public class VentanaAgregarPersona extends JFrame {
 
 	private Coordinador coordinador;
-	private Integer rangoMinimo;
-	private Integer rangoMaximo;
+	private Integer rangoMinimo, rangoMaximo;
 	private JTextField txt_Nombre;
-	private JComboBox<Integer> cbx_Deporte;
-	private JComboBox<Integer> cbx_Musica;
-	private JComboBox<Integer> cbx_Espectaculo;
-	private JComboBox<Integer> cbx_Ciencia;
+	private JComboBox<Integer> cbx_Deporte, cbx_Musica, cbx_Espectaculo, cbx_Ciencia;
 
 	public VentanaAgregarPersona(Coordinador coord) {	
 		coordinador = coord;
 		rangoMinimo = coordinador.obtenerRangoMinimo();
 		rangoMaximo = coordinador.obtenerRangoMaximo();
 		
-		setSize(515, 225);
 		setTitle("Agregar Persona");
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/agregarPersona32.png")));

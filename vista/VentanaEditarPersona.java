@@ -21,14 +21,9 @@ import controlador.Coordinador;
 public class VentanaEditarPersona extends JFrame {
 
 	private Coordinador coordinador;
-	private Integer rangoMinimo;
-	private Integer rangoMaximo;
-	private JTextField txt_Id;
-	private JTextField txt_Nombre;
-	private JComboBox<Integer> cbx_Deporte;
-	private JComboBox<Integer> cbx_Musica;
-	private JComboBox<Integer> cbx_Espectaculo;
-	private JComboBox<Integer> cbx_Ciencia;
+	private Integer rangoMinimo, rangoMaximo;
+	private JTextField txt_Id, txt_Nombre;
+	private JComboBox<Integer> cbx_Deporte, cbx_Musica, cbx_Espectaculo, cbx_Ciencia;
 
 	public VentanaEditarPersona(Coordinador coord) {
 		coordinador = coord;
@@ -46,8 +41,7 @@ public class VentanaEditarPersona extends JFrame {
 		agregarComponentes();
 	}
 
-	public void mostrarVentana(String id, String nombre, String intDeporte, String intMusica, String intEspectaculo,
-			String intCiencia) {
+	public void mostrarVentana(String id, String nombre, String intDeporte, String intMusica, String intEspectaculo, String intCiencia) {
 		this.txt_Id.setText(id);
 		this.txt_Nombre.setText(nombre);
 		this.cbx_Deporte.setSelectedItem(Integer.parseInt(intDeporte));
@@ -56,7 +50,7 @@ public class VentanaEditarPersona extends JFrame {
 		this.cbx_Ciencia.setSelectedItem(Integer.parseInt(intCiencia));
 		setVisible(true);
 	}
-
+		
 	public void cerrarVentana() {
 		setVisible(false);
 	}
