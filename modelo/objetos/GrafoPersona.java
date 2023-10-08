@@ -14,7 +14,6 @@ public class GrafoPersona {
 
 	public GrafoPersona() {
 		nodos = new ArrayList<>();
-
 		caminoMinimo = new ArrayList<>();
 		indiceMayorPeso = 0;
 	}

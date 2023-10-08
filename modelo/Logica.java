@@ -44,12 +44,50 @@ public class Logica {
 	
 	public void agregarPersonaEnGrafo(Persona nuevaPersona) {
 		grafo.agregarPersona(nuevaPersona);
+		actualizarAcumuladores(nuevaPersona);
+	}
+	
+	private void actualizarAcumuladores(Persona nuevaPersona) {
 		acumInteresDeporte += nuevaPersona.interesDeporte();
 		acumInteresMusica += nuevaPersona.interesMusica();
 		acumInteresEspectaculos += nuevaPersona.interesEspectaculo();
 		acumInteresCiencia += nuevaPersona.interesCiencia();
 	}
 
+	public Integer rangoMinimo() {
+		return Persona.rangoMinimo();
+	}
+
+	public Integer rangoMaximo() {
+		return Persona.rangoMaximo();
+	}
+	
+	public Integer cantPersonas() {
+		return grafo.nodos().size();
+	}
+	
+	public Integer promInteresDeportes() {
+		return promedioInteresValido(acumInteresDeporte);
+	}
+
+	public Integer promInteresMusica() {
+		return promedioInteresValido(acumInteresMusica);
+	}
+
+	public Integer promInteresEspectaculo() {
+		return promedioInteresValido(acumInteresEspectaculos);
+	}
+
+	public Integer promInteresCiencia() {
+		return promedioInteresValido(acumInteresCiencia);
+	}
+
+	private Integer promedioInteresValido(Integer acumuladorInteres) {		
+		if (acumuladorInteres < cantPersonas())
+			return 0;
+		return acumuladorInteres/cantPersonas();
+	}
+	
 	public List<Object[]> obtenerGrupos() {
 		grafo.calcularCaminoMinimo();
 
@@ -66,6 +104,7 @@ public class Logica {
 		grupo1.add(agm.get(indiceMayorPeso).persona1().nombre());
 		grupo2.add(agm.get(indiceMayorPeso).persona2().nombre());
 
+		// ELIMINAR ESTOOOOOOO
 		System.out.println("Arista Mayor Peso:" + agm.get(indiceMayorPeso).toString());
 
 		agm.remove(indiceMayorPeso);
@@ -118,40 +157,6 @@ public class Logica {
 			sb.append(s + separador);
 		}
 		return sb.toString().substring(0, sb.length() - separador.length());
-	}
-
-	public Integer rangoMinimo() {
-		return Persona.rangoMinimo();
-	}
-
-	public Integer rangoMaximo() {
-		return Persona.rangoMaximo();
-	}
-	
-	public Integer cantPersonas() {
-		return grafo.nodos().size();
-	}
-	
-	public Integer promInteresDeportes() {
-		return promedioInteresValido(acumInteresDeporte);
-	}
-
-	public Integer promInteresMusica() {
-		return promedioInteresValido(acumInteresMusica);
-	}
-
-	public Integer promInteresEspectaculo() {
-		return promedioInteresValido(acumInteresEspectaculos);
-	}
-
-	public Integer promInteresCiencia() {
-		return promedioInteresValido(acumInteresCiencia);
-	}
-
-	private Integer promedioInteresValido(Integer acumuladorInteres) {		
-		if (acumuladorInteres < cantPersonas())
-			return 0;
-		return acumuladorInteres/cantPersonas();
 	}
 	
 }

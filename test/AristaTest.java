@@ -36,9 +36,7 @@ class AristaTest {
 	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void aristaOtroObjetoNoArista() {
-
 		assertFalse(arista_Matias_Lucas.equals(personaTest_Matias));
-
 	}
 
 	@Test

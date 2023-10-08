@@ -47,18 +47,6 @@ public class AdmTablas {
 		tabla.setModel(modeloConCeldasNoEditables);
 	}
 
-	public void establecerModeloPorDefecto(JTable tabla) {
-		DefaultTableModel modelo = new DefaultTableModel();
-		tabla.setModel(modelo);
-	}
-
-	public void establecerModeloPorDefecto(JTable tabla, List<Object[]> valoresFilas, String[] nombresColumnas) {
-		DefaultTableModel modelo = new DefaultTableModel();
-		establecerTituloColumnas(tabla, nombresColumnas);
-		establecerValores(tabla, valoresFilas);
-		tabla.setModel(modelo);
-	}
-
 	public void centrarValoresEnCeldas(JTable tabla) {
 		Integer cantColumnas = tabla.getColumnCount();
 
