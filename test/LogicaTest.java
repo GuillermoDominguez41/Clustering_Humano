@@ -34,7 +34,7 @@ class LogicaTest {
 	@Test
 	void obtenerGrupos() {
 		agregarPersonaGrafo();
-		assertTrue((grupos.get(0).equals("Eduardo - Matias - Juan")) && grupos.get(1).equals("Lucas"));
+		assertTrue((grupos.get(0)[1].equals("Eduardo - Matias - Juan")) && grupos.get(1)[1].equals("Lucas"));
 	}
 
 	@Test

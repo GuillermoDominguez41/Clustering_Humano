@@ -20,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.table.DefaultTableModel;
 import controlador.Coordinador;
 
 @SuppressWarnings("serial")
