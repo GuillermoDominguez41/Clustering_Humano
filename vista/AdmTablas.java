@@ -8,40 +8,34 @@ import javax.swing.table.DefaultTableModel;
 
 public class AdmTablas {
 
-	public void setValores(JTable tabla, List<Object[]> valoresFilas) 
-	{
+	public void establecerValores(JTable tabla, List<Object[]> valoresFilas) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		limpiarTabla(modelo);
 		agregarFilas(modelo, valoresFilas);
 	}
-	
-	private void agregarFilas(DefaultTableModel modelo, List<Object[]> valoresFilas) 
-	{
+
+	private void agregarFilas(DefaultTableModel modelo, List<Object[]> valoresFilas) {
 		for (Object[] fila : valoresFilas) {
 			modelo.addRow(fila);
 		}
 	}
-	
-	private void limpiarTabla(DefaultTableModel modelo) 
-	{
+
+	private void limpiarTabla(DefaultTableModel modelo) {
 		while (modelo.getRowCount() > 0) {
 			modelo.removeRow(0);
 		}
 	}
-	
-	public void setTituloColumnas(JTable tabla, String[] nombreColumnas) 
-	{
+
+	public void establecerTituloColumnas(JTable tabla, String[] nombreColumnas) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		modelo.setColumnIdentifiers(nombreColumnas);
 	}
-	
-	public void ajustarAnchoColumna(JTable tabla, Integer numeroColumna, Integer anchoColumna) 
-	{
+
+	public void ajustarAnchoColumna(JTable tabla, Integer numeroColumna, Integer anchoColumna) {
 		tabla.getColumnModel().getColumn(numeroColumna).setPreferredWidth(anchoColumna);
 	}
-		
-	public void setModeloNoEditable(JTable tabla) 
-	{
+
+	public void establecerModeloNoEditable(JTable tabla) {
 		@SuppressWarnings("serial")
 		DefaultTableModel modeloConCeldasNoEditables = new DefaultTableModel() {
 			@Override
@@ -52,30 +46,28 @@ public class AdmTablas {
 
 		tabla.setModel(modeloConCeldasNoEditables);
 	}
-	
-	public void setModeloPorDefecto(JTable tabla) {
+
+	public void establecerModeloPorDefecto(JTable tabla) {
 		DefaultTableModel modelo = new DefaultTableModel();
 		tabla.setModel(modelo);
 	}
-	
-	public void setModeloPorDefecto(JTable tabla, List<Object[]> valoresFilas, String[] nombresColumnas) 
-	{
+
+	public void establecerModeloPorDefecto(JTable tabla, List<Object[]> valoresFilas, String[] nombresColumnas) {
 		DefaultTableModel modelo = new DefaultTableModel();
-		setTituloColumnas(tabla, nombresColumnas);
-		setValores(tabla, valoresFilas);
+		establecerTituloColumnas(tabla, nombresColumnas);
+		establecerValores(tabla, valoresFilas);
 		tabla.setModel(modelo);
 	}
-	
-	public void centrarValoresEnCeldas(JTable tabla) 
-	{
+
+	public void centrarValoresEnCeldas(JTable tabla) {
 		Integer cantColumnas = tabla.getColumnCount();
-		
+
 		DefaultTableCellRenderer CellRender = new DefaultTableCellRenderer();
 		CellRender.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		for (int c = 0; c < cantColumnas; c++) {
 			tabla.getColumnModel().getColumn(c).setCellRenderer(CellRender);
 		}
 	}
-	
+
 }

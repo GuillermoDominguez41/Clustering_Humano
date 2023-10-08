@@ -126,9 +126,9 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 
-		admTabla.setModeloNoEditable(tablaPersonas);
-		admTabla.setTituloColumnas(tablaPersonas, nombreColumnas);
-		admTabla.setValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
+		admTabla.establecerModeloNoEditable(tablaPersonas);
+		admTabla.establecerTituloColumnas(tablaPersonas, nombreColumnas);
+		admTabla.establecerValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
 		admTabla.centrarValoresEnCeldas(tablaPersonas);
 		admTabla.ajustarAnchoColumna(tablaPersonas, 0, 10);
 
@@ -221,8 +221,8 @@ public class VentanaPrincipal extends JFrame {
 		pnl_Grupos.add(pnl_GruposTablas);
 
 		tablaGrupos = new JTable();
-		admTabla.setModeloNoEditable(tablaGrupos);
-		admTabla.setTituloColumnas(tablaGrupos, nombreColumnas);
+		admTabla.establecerModeloNoEditable(tablaGrupos);
+		admTabla.establecerTituloColumnas(tablaGrupos, nombreColumnas);
 
 		JScrollPane scrollPane = new JScrollPane(tablaGrupos);
 		pnl_GruposTablas.add(scrollPane);
@@ -237,11 +237,11 @@ public class VentanaPrincipal extends JFrame {
 	}
 	
 	private void actualizarTablaPersonas() {
-		admTabla.setValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
+		admTabla.establecerValores(tablaPersonas, coordinador.obtenerPersonasEnListaObject());
 	}
 	
 	private void actualizarTablaGrupos() {
-		admTabla.setValores(tablaGrupos, coordinador.obtenerGrupos());
+		admTabla.establecerValores(tablaGrupos, coordinador.obtenerGrupos());
 	}
 
 	public void actualizarEstadisticas() {
