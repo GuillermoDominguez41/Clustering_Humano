@@ -32,6 +32,7 @@ public class VentanaAgregarPersona extends JFrame {
 		rangoMaximo = coordinador.obtenerRangoMaximo();
 		
 		setTitle("Agregar Persona");
+		setSize(515, 250);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/agregarPersona32.png")));
 		setResizable(false);

@@ -63,7 +63,8 @@ public class Logica {
 	}
 	
 	public Integer cantPersonas() {
-		return grafo.nodos().size();
+		List<Persona> listadoPersonas = coordinador.obtenerPersonasEnListaPersona();
+		return listadoPersonas.size();
 	}
 	
 	public Integer promInteresDeportes() {
@@ -99,19 +100,12 @@ public class Logica {
 		Set<String> grupo1 = new HashSet<String>();
 		Set<String> grupo2 = new HashSet<String>();
 
-		// 1° Se añaden las personas que componen la arista con mayor peso en dos grupos
-		// distintos y eliminamos la arista 'x'
 		grupo1.add(agm.get(indiceMayorPeso).persona1().nombre());
 		grupo2.add(agm.get(indiceMayorPeso).persona2().nombre());
-
-		// ELIMINAR ESTOOOOOOO
-		System.out.println("Arista Mayor Peso:" + agm.get(indiceMayorPeso).toString());
-
 		agm.remove(indiceMayorPeso);
 
-		// 2° Comenzamos a recorrer la lista de aristas "AGM"
 		while ((grupo1.size() + grupo2.size()) < cantPersonas) {
-			removerArista(agm, grupo1, grupo2);
+			asignarPersonaEnGrupo(agm, grupo1, grupo2);
 		}
 
 		grupos.add(new Object[] { "Grupo 1", listaToString(grupo1) });
@@ -120,10 +114,9 @@ public class Logica {
 		return grupos;
 	}
 
-	private void removerArista(List<Arista> agm, Set<String> g1, Set<String> g2) {
-
+	private void asignarPersonaEnGrupo(List<Arista> agm, Set<String> g1, Set<String> g2 ) {
+		
 		for (int a = 0; a < agm.size(); a++) {
-
 			if (g1.contains(agm.get(a).persona1().nombre())) {
 				g1.add(agm.get(a).persona2().nombre());
 				agm.remove(a);

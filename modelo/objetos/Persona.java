@@ -2,26 +2,22 @@ package modelo.objetos;
 
 public class Persona {
 
-	private Integer id;
-	private String nombre;
-	private Integer InteresDeporte;
-	private Integer InteresMusica;
-	private Integer InteresEspectaculo;
-	private Integer InteresCiencia;
 	private static Integer rangoMinimo = 1;
 	private static Integer rangoMaximo = 5;
+	private String nombre;
+	private Integer id, interesDeporte, interesMusica, interesEspectaculo, interesCiencia;
 
-	public Persona(String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) {
-
+	public Persona(String nombre, Integer intDeporte, Integer intMusica, Integer intEspectaculo, Integer intCiencia) 
+	{
 		if (nombre == null || intDeporte == null || intMusica == null || intEspectaculo == null || intCiencia == null)
 			errorParametroNulo();
 		else {
 			this.nombre = nombre;
 			if (interesValido(intDeporte, intMusica, intEspectaculo, intCiencia)) {
-				this.InteresDeporte = intDeporte;
-				this.InteresMusica = intMusica;
-				this.InteresEspectaculo = intEspectaculo;
-				this.InteresCiencia = intCiencia;
+				this.interesDeporte = intDeporte;
+				this.interesMusica = intMusica;
+				this.interesEspectaculo = intEspectaculo;
+				this.interesCiencia = intCiencia;
 			} else
 				errorParametroFueraDeRango();
 		}
@@ -35,17 +31,15 @@ public class Persona {
 			this.id = id;
 			this.nombre = nombre;
 			if (interesValido(intDeporte, intMusica, intEspectaculo, intCiencia)) {
-				this.InteresDeporte = intDeporte;
-				this.InteresMusica = intMusica;
-				this.InteresEspectaculo = intEspectaculo;
-				this.InteresCiencia = intCiencia;
+				this.interesDeporte = intDeporte;
+				this.interesMusica = intMusica;
+				this.interesEspectaculo = intEspectaculo;
+				this.interesCiencia = intCiencia;
 			} else
 				errorParametroFueraDeRango();
 		}
 	}
 
-	// ---------- Validar intereses
-	// -------------------------------------------------------
 	private boolean interesValido(Integer ID, Integer IM, Integer IE, Integer IC) {
 		return rangoInteresValido(ID) && rangoInteresValido(IM) && rangoInteresValido(IE) && rangoInteresValido(IC);
 	}
@@ -53,14 +47,20 @@ public class Persona {
 	private boolean rangoInteresValido(Integer interes) {
 		return interes >= rangoMinimo && interes <= rangoMaximo;
 	}
+	
+	private void errorParametroNulo() {
+		throw new IllegalArgumentException("Los parametros ingresados no pueden ser nulo o vacio");
+	}
 
-	// ---------- Calcular indice de similitud
-	// --------------------------------------------
+	private void errorParametroFueraDeRango() {
+		throw new IllegalArgumentException("El parametro ingresado se encuentra fuera del rango definido");
+	}
+
 	public Integer calcularIndiceSimilitud(Persona otraPersona) {
-		int iDepor = calcularDiferenciaInteres(InteresDeporte, otraPersona.interesDeporte());
-		int iMusic = calcularDiferenciaInteres(InteresMusica, otraPersona.interesMusica());
-		int iEspec = calcularDiferenciaInteres(InteresEspectaculo, otraPersona.interesEspectaculo());
-		int iCienc = calcularDiferenciaInteres(InteresCiencia, otraPersona.interesCiencia());
+		int iDepor = calcularDiferenciaInteres(interesDeporte, otraPersona.interesDeporte());
+		int iMusic = calcularDiferenciaInteres(interesMusica, otraPersona.interesMusica());
+		int iEspec = calcularDiferenciaInteres(interesEspectaculo, otraPersona.interesEspectaculo());
+		int iCienc = calcularDiferenciaInteres(interesCiencia, otraPersona.interesCiencia());
 		return iDepor + iMusic + iEspec + iCienc;
 	}
 
@@ -68,8 +68,6 @@ public class Persona {
 		return Math.abs(interesP1 - interesP2);
 	}
 
-	// ---------- Getters y Setters
-	// --------------------------------------------------------
 	public Integer id() {
 		return id;
 	}
@@ -79,19 +77,19 @@ public class Persona {
 	}
 
 	public Integer interesDeporte() {
-		return InteresDeporte;
+		return interesDeporte;
 	}
 
 	public Integer interesMusica() {
-		return InteresMusica;
+		return interesMusica;
 	}
 
 	public Integer interesEspectaculo() {
-		return InteresEspectaculo;
+		return interesEspectaculo;
 	}
 
 	public Integer interesCiencia() {
-		return InteresCiencia;
+		return interesCiencia;
 	}
 
 	public static Integer rangoMinimo() {
@@ -101,9 +99,6 @@ public class Persona {
 	public static Integer rangoMaximo() {
 		return rangoMaximo;
 	}
-
-	// ---------- Definir metodos propios para este Objeto
-	// ---------------------------------
 
 	@Override
 	public boolean equals(Object otroObjeto) {
@@ -116,18 +111,8 @@ public class Persona {
 
 	@Override
 	public String toString() {
-		return "Nombre:" + nombre + " - ID:" + InteresDeporte + " - IM:" + InteresMusica + " - IE:" + InteresEspectaculo
-				+ " - IC:" + InteresCiencia;
-	}
-
-	// ------------ Errores
-	// ----------------------------------------------------------
-	private void errorParametroNulo() {
-		throw new IllegalArgumentException("Los parametros ingresados no pueden ser nulo o vacio");
-	}
-
-	private void errorParametroFueraDeRango() {
-		throw new IllegalArgumentException("El parametro ingresado se encuentra fuera del rango definido");
+		return "[Nombre:" + nombre + " - ID:" + interesDeporte + " - IM:" + interesMusica + " - IE:" + interesEspectaculo
+				+ " - IC:" + interesCiencia+"]";
 	}
 
 }

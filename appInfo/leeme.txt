@@ -19,7 +19,3 @@ Librerias necesarias para iniciar la APP
  	-Uso: Biblioteca para acceder y crear archivos de bases de datos SQLite en Java.
  	-Ubicacion JAR: ../src/lib/sqlite-jdbc-3.43.0.0.jar
  	-Fuente: https://github.com/xerial/sqlite-jdbc
- 	
- 
- ELIMINAR SYSOUT:
- 	-GrafoPersona → calcularCaminoMinimo();

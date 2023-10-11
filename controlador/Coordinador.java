@@ -18,27 +18,27 @@ public class Coordinador {
 	private boolean hayDosVentanasAbiertas;
 
 	public Coordinador() {
-		hayDosVentanasAbiertas = false;
+		this.hayDosVentanasAbiertas = false;
 	}
 
-	public void setLogica(Logica l) {
-		logica = l;
+	public void setLogica(Logica logica) {
+		this.logica = logica;
 	}
 	
-	public void setAdministradorBD(AdmBaseDatos admBD) {
-		administradorBD = admBD; 
+	public void setAdministradorBD(AdmBaseDatos administradorBaseDatos) {
+		this.administradorBD = administradorBaseDatos; 
 	}
 
-	public void setVentanaPrincipal(VentanaPrincipal vP) {
-		vPrincipal = vP;
+	public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal) {
+		this.vPrincipal = ventanaPrincipal;
 	}
 
-	public void setVentanaAgregarPersona(VentanaAgregarPersona vAP) {
-		vAgregarPersona = vAP;
+	public void setVentanaAgregarPersona(VentanaAgregarPersona ventanaAgreagarPersona) {
+		this.vAgregarPersona = ventanaAgreagarPersona;
 	}
 	
-	public void setVentanaEditarPersona(VentanaEditarPersona vEP) {
-		vEditarPersona = vEP;
+	public void setVentanaEditarPersona(VentanaEditarPersona ventanaEditarPersona) {
+		this.vEditarPersona = ventanaEditarPersona;
 	}
 	
 	public void mostrarVentanaAgregarPersona() {

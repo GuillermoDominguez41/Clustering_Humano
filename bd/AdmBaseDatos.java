@@ -9,14 +9,13 @@ import modelo.objetos.Persona;
 
 public class AdmBaseDatos {
 	private Conexion cx;
-	private String tablaPersona = "Personas";
-	private String colPersona_id = "id";
-	private String colPersona_Nombre = "nombre";
-	private String colPersona_InteresDeporte = "interesDeporte";
-	private String colPersona_InteresMusica = "interesMusica";
-	private String colPersona_InteresEspectaculo = "interesEspectaculo";
-	private String colPersona_InteresCiencia = "interesCiencia";
-	public enum FormatoLista {Object, Persona};
+	private static String tablaPersona = "Personas";
+	private static String colPersona_id = "id";
+	private static String colPersona_Nombre = "nombre";
+	private static String colPersona_InteresDeporte = "interesDeporte";
+	private static String colPersona_InteresMusica = "interesMusica";
+	private static String colPersona_InteresEspectaculo = "interesEspectaculo";
+	private static String colPersona_InteresCiencia = "interesCiencia";
 
 	public AdmBaseDatos() {
 		cx = new Conexion();

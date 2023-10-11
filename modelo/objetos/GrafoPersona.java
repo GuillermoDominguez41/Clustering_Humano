@@ -6,9 +6,7 @@ import java.util.List;
 
 public class GrafoPersona {
 	private List<Persona> nodos;
-
 	private List<Arista> caminoMinimo;
-
 	private int[][] matrizAdyacencia;
 	private int indiceMayorPeso;
 
@@ -19,36 +17,32 @@ public class GrafoPersona {
 	}
 
 	public void agregarPersona(Persona persona) {
+		agregarPersonaEnNodo(persona);
+		actualizarMatrizAdyacencia();
+	}
+	
+	private void agregarPersonaEnNodo(Persona persona) {
 		nodos.add(persona);
-		int n = nodos.size();
-		int[][] nuevaMatriz = new int[n][n];
-
-		for (int i = 0; i < n - 1; i++) {
-			for (int j = 0; j < n - 1; j++) {
-				nuevaMatriz[i][j] = matrizAdyacencia[i][j];
+	}
+	
+	private void actualizarMatrizAdyacencia() {
+		int cantPersonas = nodos.size();
+		int[][] nuevaMatriz = new int[cantPersonas][cantPersonas];
+		for (int i = 0; i < cantPersonas; i++) {
+			for (int j = i + 1; j < cantPersonas; j++) {
+				Persona persona1 = nodos.get(i);
+				Persona persona2 = nodos.get(j);
+				int similitud = persona1.calcularIndiceSimilitud(persona2);
+				
+				nuevaMatriz[i][j] = similitud;
+				nuevaMatriz[j][i] = similitud;
 			}
 		}
 		matrizAdyacencia = nuevaMatriz;
-		calcularAristas();
-	}
-
-	private void calcularAristas() {
-		int n = nodos.size();
-		for (int i = 0; i < n; i++) {
-			for (int j = i + 1; j < n; j++) {
-				int similitud = calcularSimilitud(nodos.get(i), nodos.get(j));
-				matrizAdyacencia[i][j] = similitud;
-				matrizAdyacencia[j][i] = similitud;
-			}
-		}
 	}
 
 	public void eliminarPersonas() {
 		nodos.clear();
-	}
-
-	private int calcularSimilitud(Persona p1, Persona p2) {
-		return p1.calcularIndiceSimilitud(p2);
 	}
 
 	// Implementa el algoritmo de Prim para calcular el árbol de expansión mínima.
@@ -76,14 +70,11 @@ public class GrafoPersona {
 			}
 		}
 
-		// Imprime el camino mínimo
-		System.out.println("Camino minimo:");
 		Integer mayorValorSimilaridad = Integer.MIN_VALUE;
 
 		for (int i = 1; i < n; i++) {
 			Integer similaridad = matrizAdyacencia[i][padre[i]];
 			caminoMinimo.add(new Arista(nodos.get(padre[i]), nodos.get(i), similaridad));
-			System.out.println(nodos.get(padre[i]).nombre() + " - " + nodos.get(i).nombre() + ": " + similaridad);
 
 			if (similaridad > mayorValorSimilaridad) {
 				mayorValorSimilaridad = similaridad;
@@ -107,10 +98,6 @@ public class GrafoPersona {
 		}
 
 		return minimoIndice;
-	}
-
-	public List<Persona> nodos() {
-		return this.nodos;
 	}
 
 	public List<Arista> caminoMinimo() {

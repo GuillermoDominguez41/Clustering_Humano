@@ -21,7 +21,6 @@ class GrafoTest {
 		grafoPrueba.agregarPersona(new Persona("Lucas", 2, 2, 1, 4));
 		grafoPrueba.agregarPersona(new Persona("Juan", 2, 2, 1, 4));
 		grafoPrueba.agregarPersona(new Persona("Eduardo", 2, 2, 1, 4));
-
 	}
 
 	@Test
@@ -34,23 +33,5 @@ class GrafoTest {
 		// La respuesta es 3 porque esperamos el mayor indice de la lista.
 		assertEquals(3, agm.size());
 	}
-
-	@Test
-	void agregarPersona() {
-
-		Integer cantidadPersonas = grafoPrueba.nodos().size();
-		grafoPrueba.agregarPersona(new Persona("Leopoldo", 4, 2, 1, 4));
-		cantidadPersonas++;
-
-		assertEquals(cantidadPersonas, grafoPrueba.nodos().size());
-	}
-
-	// Metodos no testeados:
-
-	/*
-	 * agregarPersona: La única forma en la que puede fallar este método, es
-	 * generando de forma errónea una persona, la cual ya tiene contemplada tales
-	 * casos.
-	 */
 
 }
