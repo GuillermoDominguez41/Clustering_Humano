@@ -38,19 +38,13 @@ class LogicaTest {
 	}
 
 	@Test
-	void logicaRangoMinimo() {
+	void logicaRangoMinimoInteresPersona() {
 		assertEquals(logica.rangoMinimo(), Persona.rangoMinimo());
 	}
 
 	@Test
-	void logicaRangoMaximo() {
+	void logicaRangoMaximoInteresPersona() {
 		assertEquals(logica.rangoMaximo(), Persona.rangoMaximo());
 	}
 
-	@Test
-	void promedioInteresDeporteG1() {
-
-		// logica.promInteresDeporte();
-
-	}
 }
